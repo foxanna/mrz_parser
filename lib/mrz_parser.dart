@@ -16,14 +16,14 @@ class MRZParser {
       return null;
     }
 
-    if (_TD1MRZFormat.isValidInput(input)) {
-      return _TD1MRZFormat.parse(input);
+    if (_TD1MRZFormatParser.isValidInput(input)) {
+      return _TD1MRZFormatParser.parse(input);
     }
-    if (_TD2MRZFormat.isValidInput(input)) {
-      return _TD2MRZFormat.parse(input);
+    if (_TD2MRZFormatParser.isValidInput(input)) {
+      return _TD2MRZFormatParser.parse(input);
     }
-    if (_TD3MRZFormat.isValidInput(input)) {
-      return _TD3MRZFormat.parse(input);
+    if (_TD3MRZFormatParser.isValidInput(input)) {
+      return _TD3MRZFormatParser.parse(input);
     }
 
     return null;
