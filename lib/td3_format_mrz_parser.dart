@@ -1,10 +1,10 @@
 part of mrz_parser;
 
-class _TD1MRZFormat {
-  _TD1MRZFormat._();
+class _TD3MRZFormat {
+  _TD3MRZFormat._();
 
-  static const _linesLength = 30;
-  static const _linesCount = 3;
+  static const _linesLength = 44;
+  static const _linesCount = 2;
 
   static bool isValidInput(List<String> input) =>
       input.length == _linesCount &&
