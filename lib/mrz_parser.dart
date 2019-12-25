@@ -3,24 +3,27 @@ library mrz_parser;
 import 'package:mrz_parser/mrz_result.dart';
 
 part 'td1_format_mrz_parser.dart';
+part 'td2_format_mrz_parser.dart';
+part 'td3_format_mrz_parser.dart';
 
 class MRZParser {
   MRZParser._();
 
   static MRZResult parse(List<String> input) {
-    if (!_isValidInput(input)) {
+    if (input == null) {
       return null;
     }
 
+    if (_TD1MRZFormat.isValidInput(input)) {
+      return _TD1MRZFormat.parse(input);
+    }
+    if (_TD2MRZFormat.isValidInput(input)) {
+      return _TD2MRZFormat.parse(input);
+    }
+    if (_TD3MRZFormat.isValidInput(input)) {
+      return _TD3MRZFormat.parse(input);
     }
 
-    return const MRZResult();
-  }
-
-  static bool _isValidInput(List<String> input) =>
-      input != null && (input.length == 2 || input.length == 3);
-
-  static _MRZFormat _getMRZFormat(List<String> input) {
-    }
+    return null;
   }
 }

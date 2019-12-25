@@ -9,22 +9,50 @@ void main() {
 
     test('null input', () => testExecutor(null));
 
-    test('one-line input', () => testExecutor(['invalid input']));
+    test('1-line input', () => testExecutor(['0123456789']));
 
     test(
-        'four-lines input',
+        '4-lines input',
         () => testExecutor([
-              'invalid input',
-              'invalid input',
-              'invalid input',
-              'invalid input',
+              '0123456789',
+              '0123456789',
+              '0123456789',
+              '0123456789',
             ]));
     test(
-        'three-lines input with <30 symbols',
+        '3-lines input with 10 symbols',
         () => testExecutor([
-              'invalid input',
-              'invalid input',
-              'invalid input',
+              '0123456789',
+              '0123456789',
+              '0123456789',
+            ]));
+    test(
+        '3-lines input with 40 symbols',
+        () => testExecutor([
+              '0123456789012345678901234567890123456789',
+              '0123456789012345678901234567890123456789',
+              '0123456789012345678901234567890123456789',
+            ]));
+
+    test(
+        '2-lines input with 10 symbols',
+        () => testExecutor([
+              '0123456789',
+              '0123456789',
+            ]));
+
+    test(
+        '2-lines input with 40 symbols',
+        () => testExecutor([
+              '0123456789012345678901234567890123456789',
+              '0123456789012345678901234567890123456789',
+            ]));
+
+    test(
+        '2-lines input with 50 symbols',
+        () => testExecutor([
+              '01234567890123456789012345678901234567890123456789',
+              '01234567890123456789012345678901234567890123456789',
             ]));
   });
 
@@ -49,6 +77,36 @@ void main() {
       '012345678901234567890123456789',
       '012345678901234567890123456789',
       '012345678901234567890123456789',
+    ];
+    const parsed = MRZResult();
+
+    // Act
+    final result = MRZParser.parse(mrzLines);
+
+    // Assert
+    expect(result, parsed);
+  });
+
+  test('any TD2 format input parses', () {
+    // Arrange
+    const mrzLines = <String>[
+      '012345678901234567890123456789012345',
+      '012345678901234567890123456789012345',
+    ];
+    const parsed = MRZResult();
+
+    // Act
+    final result = MRZParser.parse(mrzLines);
+
+    // Assert
+    expect(result, parsed);
+  });
+
+  test('any TD3 format input parses', () {
+    // Arrange
+    const mrzLines = <String>[
+      '01234567890123456789012345678901234567890123',
+      '01234567890123456789012345678901234567890123',
     ];
     const parsed = MRZResult();
 
