@@ -20,10 +20,9 @@ void main() {
       'L898902C36UTO7408122F1204159ZE184226B<<<<<10'
     ];
     const parsed = MRZResult();
-    final parser = MRZParser();
 
     // Act
-    final result = parser.parse(mrzLines);
+    final result = MRZParser.parse(mrzLines);
 
     // Assert
     expect(result, parsed);
