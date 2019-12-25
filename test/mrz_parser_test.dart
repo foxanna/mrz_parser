@@ -3,6 +3,16 @@ import 'package:mrz_parser/mrz_result.dart';
 import 'package:test/test.dart';
 
 void main() {
+  test('null input returns null', () {
+    // Arrange
+
+    // Act
+    final result = MRZParser.parse(null);
+
+    // Assert
+    expect(result, null);
+  });
+
   test('correct mrz input parses', () {
     // Arrange
     const mrzLines = <String>[

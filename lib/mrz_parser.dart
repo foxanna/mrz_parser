@@ -6,5 +6,10 @@ import 'package:mrz_parser/mrz_result.dart';
 class MRZParser {
   MRZParser._();
 
-  MRZResult parse(List<String> input) => null;
+  static MRZResult parse(List<String> input) {
+    if (input == null) {
+      return null;
+    }
+    return const MRZResult();
+  }
 }
