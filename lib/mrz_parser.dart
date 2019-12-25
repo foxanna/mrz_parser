@@ -3,6 +3,7 @@ library mrz_parser;
 import 'package:mrz_parser/mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
+part 'mrz_field_formatter.dart';
 part 'td1_format_mrz_parser.dart';
 part 'td2_format_mrz_parser.dart';
 part 'td3_format_mrz_parser.dart';
