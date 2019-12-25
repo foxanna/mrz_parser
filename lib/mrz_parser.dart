@@ -3,6 +3,8 @@ library mrz_parser;
 import 'package:mrz_parser/mrz_result.dart';
 
 part 'mrz_format.dart';
+part 'td1_format_mrz_parser.dart';
+
 class MRZParser {
   MRZParser._();
 
@@ -13,7 +15,7 @@ class MRZParser {
 
     switch (_getMRZFormat(input)) {
       case _MRZFormat.td1:
-        break;
+        return _TD1MRZFormat.parse(input);
       case _MRZFormat.td2:
         break;
       case _MRZFormat.td3:
@@ -33,7 +35,9 @@ class MRZParser {
       case 2:
         return _MRZFormat.unknown;
       case 3:
-        return _MRZFormat.unknown;
+        return _TD1MRZFormat.isValidInput(input)
+            ? _MRZFormat.td1
+            : _MRZFormat.unknown;
       default:
         return _MRZFormat.unknown;
     }
