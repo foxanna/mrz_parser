@@ -2,7 +2,7 @@ library mrz_parser;
 
 import 'package:mrz_parser/mrz_result.dart';
 
-/// A MRZ parser.
+part 'mrz_format.dart';
 class MRZParser {
   MRZParser._();
 
