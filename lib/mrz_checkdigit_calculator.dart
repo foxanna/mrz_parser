@@ -1,0 +1,41 @@
+part of mrz_parser;
+
+class MRZCheckDigitCalculator {
+  MRZCheckDigitCalculator._();
+
+  static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
+  static final _weights = [7, 3, 1];
+
+  static int getCheckDigit(String input) {
+    if (input == null || !_validInput.hasMatch(input)) {
+      return null;
+    }
+
+    final checkSum = input.codeUnits
+        .map((c) {
+          if (_isCapitalLetter(c)) {
+            return c - _A + 10;
+          }
+          if (_isDigit(c)) {
+            return c - _0;
+          }
+          return 0;
+        })
+        .toList()
+        .asMap()
+        .map((i, v) => MapEntry(i, v * _weights[i % _weights.length]))
+        .values
+        .reduce((value, element) => value + element);
+
+    return checkSum % 10;
+  }
+
+  static bool _isCapitalLetter(int c) => c >= _A && c <= _Z;
+
+  static bool _isDigit(int c) => c >= _0 && c <= _9;
+
+  static const int _A = 65;
+  static const int _Z = 90;
+  static const int _0 = 48;
+  static const int _9 = 57;
+}
