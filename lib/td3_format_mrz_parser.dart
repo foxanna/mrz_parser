@@ -1,7 +1,7 @@
 part of mrz_parser;
 
-class _TD3MRZFormat {
-  _TD3MRZFormat._();
+class _TD3MRZFormatParser {
+  _TD3MRZFormatParser._();
 
   static const _linesLength = 44;
   static const _linesCount = 2;
