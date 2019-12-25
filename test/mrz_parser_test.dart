@@ -3,14 +3,22 @@ import 'package:mrz_parser/mrz_result.dart';
 import 'package:test/test.dart';
 
 void main() {
-  test('null input returns null', () {
-    // Arrange
+  group('invalid input returns null', () {
+    final testExecutor =
+        (List<String> input) => expect(MRZParser.parse(input), null);
 
-    // Act
-    final result = MRZParser.parse(null);
+    test('null input', () => testExecutor(null));
 
-    // Assert
-    expect(result, null);
+    test('one-line input', () => testExecutor(['invalid input']));
+
+    test(
+        'four-lines input',
+        () => testExecutor([
+              'invalid input',
+              'invalid input',
+              'invalid input',
+              'invalid input',
+            ]));
   });
 
   test('correct mrz input parses', () {
