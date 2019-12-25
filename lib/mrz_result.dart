@@ -1,5 +1,5 @@
 class MRZResult {
-  const MRZResult(
+  const MRZResult({
     this.documentType,
     this.countryCode,
     this.surnames,
@@ -16,7 +16,7 @@ class MRZResult {
     this.isExpiryDateValid,
     this.isPersonalNumberValid,
     this.allCheckDigitsValid,
-  );
+  });
 
   final String documentType;
   final String countryCode;
@@ -28,7 +28,7 @@ class MRZResult {
   final String sex; // `null` if formatting failed
   final DateTime expiryDate; // `null` if formatting failed
   final String personalNumber;
-  final String personalNumber2; // `nulll` if not provided
+  final String personalNumber2; // `null` if not provided
 
   final bool isDocumentNumberValid;
   final bool isBirthdateValid;
