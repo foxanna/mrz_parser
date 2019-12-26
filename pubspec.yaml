@@ -1,10 +1,10 @@
 name: mrz_parser
 description: Parse MRZ (Machine Readable Zone) from identity documents.
-version: 0.0.1
+version: 1.0.0
 authors:
-  - Oleksandr Leuschenko <olexa.le@gmail.com>
   - Anna Domashych <anna.domashych@gmail.com>
-homepage:
+  - Oleksandr Leuschenko <olexa.le@gmail.com>
+homepage: https://github.com/olexale/mrz_parser
 
 environment:
   sdk: ">=2.6.0 <3.0.0"
