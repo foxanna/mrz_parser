@@ -5,9 +5,8 @@ branches:
   only: [master]
 install:
   - gem install coveralls-lcov
-  - which coveralls-lcov
-deploy:
-  provider: script
-  script: bash pub get; pub run test_coverage; coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
-  on:
-    branch: master
+script:
+  - pub get
+  - pub run test_coverage
+after_success:
+  - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
