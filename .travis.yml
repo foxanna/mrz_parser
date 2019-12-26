@@ -7,6 +7,6 @@ install:
   - gem install coveralls-lcov
 deploy:
   provider: script
-  script: bash tool/ci.sh
+  script: bash pub get;pub run test_coverage;coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
   on:
     branch: master
