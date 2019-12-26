@@ -5,6 +5,9 @@ branches:
   only: [master]
 deploy:
   provider: script
-  script: bash pub get;pub run test_coverage;bash <(curl -s https://codecov.io/bash) -t $COVERALLS_TOKEN;
+  script: 
+  - bash pub get
+  - bash pub run test_coverage
+  - bash <(curl -s https://codecov.io/bash) -t $COVERALLS_TOKEN
   on:
     branch: master
