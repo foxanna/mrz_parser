@@ -58,20 +58,60 @@ void main() {
             ]));
   });
 
-  test('any TD1 format input parses', () {
-    // Arrange
-    const mrzLines = <String>[
-      '012345678901234567890123456789',
-      '012345678901234567890123456789',
-      '012345678901234567890123456789',
-    ];
-    const parsed = MRZResult();
+  group('TD1 passport', () {
+    test('correct input parses', () {
+      testExecutor(
+          input: [
+            'I<SWE59000002<8198703142391<<<',
+            '8703145M1701027SWE<<<<<<<<<<<8',
+            'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'I',
+            countryCode: 'SWE',
+            surnames: 'SPECIMEN',
+            givenNames: 'SVEN',
+            documentNumber: '59000002',
+            nationalityCountryCode: 'SWE',
+            birthDate: DateTime(1987, 03, 14),
+            sex: Sex.male,
+            expiryDate: DateTime(2017, 01, 02),
+            personalNumber: '198703142391',
+            personalNumber2: '',
+          ));
+    });
 
-    // Act
-    final result = MRZParser.parse(mrzLines);
+    test('document number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'I<SWE59000002<0198703142391<<<',
+        '8703145M1701027SWE<<<<<<<<<<<8',
+        'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
+      ]);
+    });
 
-    // Assert
-    expect(result, parsed);
+    test('birth date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'I<SWE59000002<8198703142391<<<',
+        '8703140M1701027SWE<<<<<<<<<<<8',
+        'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
+      ]);
+    });
+
+    test('expiry date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'I<SWE59000002<8198703142391<<<',
+        '8703145M1701020SWE<<<<<<<<<<<8',
+        'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
+      ]);
+    });
+
+    test('final check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'I<SWE59000002<8198703142391<<<',
+        '8703145M1701027SWE<<<<<<<<<<<0',
+        'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
+      ]);
+    });
   });
 
   group('TD2 passport', () {
