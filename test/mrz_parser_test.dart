@@ -154,4 +154,48 @@ void main() {
       ]);
     });
   });
+
+  group('MRV-A visa', () {
+    test('correct input parses', () {
+      testExecutor(
+          input: [
+            'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
+            '12345678<8KOR5001013F1304071B3SE000IL4243934'
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'VN',
+            countryCode: 'USA',
+            surnames: 'TRAVELER',
+            givenNames: 'HAPPY',
+            documentNumber: '12345678',
+            nationalityCountryCode: 'KOR',
+            birthDate: DateTime(1950, 01, 01),
+            sex: Sex.female,
+            expiryDate: DateTime(2013, 04, 07),
+            personalNumber: 'B3SE000IL4243934',
+            personalNumber2: null,
+          ));
+    });
+
+    test('document number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
+        '12345678<0KOR5001013F1304071B3SE000IL4243934'
+      ]);
+    });
+
+    test('birth date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
+        '12345678<8KOR5001010F1304071B3SE000IL4243934'
+      ]);
+    });
+
+    test('expiry date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
+        '12345678<8KOR5001013F1304070B3SE000IL4243934'
+      ]);
+    });
+  });
 }
