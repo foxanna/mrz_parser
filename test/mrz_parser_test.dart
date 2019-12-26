@@ -125,6 +125,50 @@ void main() {
     });
   });
 
+  group('MRV-B visa', () {
+    test('correct input parses', () {
+      testExecutor(
+          input: [
+            'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
+            '0005467<<2RUS7001017M1111019<M901101'
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'VC',
+            countryCode: 'FIN',
+            surnames: 'MEIKAELAEINEN',
+            givenNames: 'MATTI',
+            documentNumber: '0005467',
+            nationalityCountryCode: 'RUS',
+            birthDate: DateTime(1970, 01, 01),
+            sex: Sex.male,
+            expiryDate: DateTime(2011, 11, 01),
+            personalNumber: 'M901101',
+            personalNumber2: null,
+          ));
+    });
+
+    test('document number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
+        '0005467<<0RUS7001017M1111019<M901101'
+      ]);
+    });
+
+    test('birth date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
+        '0005467<<2RUS7001010M1111019<M901101'
+      ]);
+    });
+
+    test('expiry date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
+        '0005467<<2RUS7001017M1111010<M901101'
+      ]);
+    });
+  });
+
   group('TD3 passport', () {
     test('correct input parses', () {
       testExecutor(
