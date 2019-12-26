@@ -4,6 +4,7 @@ import 'package:mrz_parser/mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
 part 'mrz_field_formatter.dart';
+part 'mrz_string_extensions.dart';
 part 'td1_format_mrz_parser.dart';
 part 'td2_format_mrz_parser.dart';
 part 'td3_format_mrz_parser.dart';
@@ -12,6 +13,7 @@ class MRZParser {
   MRZParser._();
 
   static MRZResult parse(List<String> input) {
+    input = _polishInput(input);
     if (input == null) {
       return null;
     }
@@ -27,5 +29,15 @@ class MRZParser {
     }
 
     return null;
+  }
+
+  static List<String> _polishInput(List<String> input) {
+    if (input == null) {
+      return null;
+    }
+
+    input = input.map((s) => s?.toUpperCase()).toList();
+
+    return input.any((s) => !s.isValidMRZInput) ? null : input;
   }
 }

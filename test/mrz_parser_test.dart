@@ -11,6 +11,8 @@ void main() {
   group('invalid input returns null', () {
     test('null input', () => nullTestExecutor(input: null));
 
+    test('1-line null input', () => nullTestExecutor(input: [null]));
+
     test('1-line input', () => nullTestExecutor(input: ['0123456789']));
 
     test(
@@ -28,6 +30,7 @@ void main() {
               '0123456789',
               '0123456789',
             ]));
+
     test(
         '3-lines input with 40 symbols',
         () => nullTestExecutor(input: [
@@ -55,6 +58,27 @@ void main() {
         () => nullTestExecutor(input: [
               '01234567890123456789012345678901234567890123456789',
               '01234567890123456789012345678901234567890123456789',
+            ]));
+
+    test(
+        '2-lines input with 36 invalid symbols',
+        () => nullTestExecutor(input: [
+              '012345678901234567890123456789!asdfg',
+              '012345678901234567890123456789{}>,.?',
+            ]));
+
+    test(
+        '2-lines input with 44 invalid symbols',
+        () => nullTestExecutor(input: [
+              '01234567890123456789012345678901234567!asdfg',
+              '01234567890123456789012345678901234567{}>,.?',
+            ]));
+
+    test(
+        '3-lines input with 30 invalid symbols',
+        () => nullTestExecutor(input: [
+              '012345678901234567890123!asdfg',
+              '012345678901234567890123{}>,.?',
             ]));
   });
 
