@@ -1,3 +1,8 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - First release
 
-* TODO: Describe initial release.
+First release with following formats:
+* TD1
+* TD2
+* TD3
+* MRV-A
+* MRV-B
