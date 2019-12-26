@@ -119,12 +119,12 @@ class MRZFieldFormatter {
 
   static String _trimChar(String input, String char) {
     var start = 0, end = input.length - 1;
-    while (input[start] == char) {
+    while (start < input.length && input[start] == char) {
       start++;
     }
-    while (input[end] == char) {
+    while (end >= 0 && input[end] == char) {
       end--;
     }
-    return input.substring(start, end + 1);
+    return start < end ? input.substring(start, end + 1) : '';
   }
 }
