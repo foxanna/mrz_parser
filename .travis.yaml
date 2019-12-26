@@ -1,0 +1,12 @@
+language: dart
+dart:
+  - stable
+branches:
+  only: [master]
+install:
+  - gem install coveralls-lcov
+deploy:
+  provider: script
+  script: bash tool/publish.sh
+  on:
+    branch: master
