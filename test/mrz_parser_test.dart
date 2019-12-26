@@ -97,8 +97,8 @@ void main() {
     });
   });
 
-  group('TD3 format', () {
-    test('TD3 correct input parses', () {
+  group('TD3 passport', () {
+    test('correct input parses', () {
       testExecutor(
           input: [
             'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
@@ -117,6 +117,41 @@ void main() {
             personalNumber: 'ZE184226B',
             personalNumber2: null,
           ));
+    });
+
+    test('document number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+        'L898902C37UTO7408122F1204159ZE184226B<<<<<10'
+      ]);
+    });
+
+    test('birth date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+        'L898902C36UTO7408120F1204159ZE184226B<<<<<10'
+      ]);
+    });
+
+    test('expiry date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+        'L898902C36UTO7408122F1204150ZE184226B<<<<<10'
+      ]);
+    });
+
+    test('personal number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+        'L898902C36UTO7408122F1204159ZE184226B<<<<<00'
+      ]);
+    });
+
+    test('final check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+        'L898902C36UTO7408122F1204159ZE184226B<<<<<19'
+      ]);
     });
   });
 }
