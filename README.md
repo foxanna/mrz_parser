@@ -1,8 +1,6 @@
-# mrz_parser
+# mrz_parser (Dart/Flutter)
 
-Parse MRZ (Machine Readable Zone) from identity documents.
-
-## Getting Started
+Parse MRZ (Machine Readable Zone) from identity documents. Heavily insipred by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
 
 ### Supported formats:
 * TD1
