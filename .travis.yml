@@ -8,9 +8,9 @@ install:
 deploy:
   provider: script
   script: 
-  - pub get
-  - pub run test_coverage
-  - which coveralls-lcov
-  - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
+    - pub get
+    - pub run test_coverage
+    - which coveralls-lcov
+    - coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
   on:
     branch: master
