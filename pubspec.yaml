@@ -7,7 +7,7 @@ authors:
 homepage:
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.6.0 <3.0.0"
 
 dev_dependencies:
   test: '>=0.12.42 <2.0.0'
