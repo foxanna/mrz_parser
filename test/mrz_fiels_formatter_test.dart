@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:mrz_parser/mrz_parser.dart';
-import 'package:mrz_parser/mrz_result.dart';
 import 'package:test/test.dart';
 
 void main() {
