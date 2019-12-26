@@ -74,8 +74,8 @@ void main() {
     expect(result, parsed);
   });
 
-  group('TD2 format', () {
-    test('TD2 correct input parses', () {
+  group('TD2 passport', () {
+    test('correct input parses', () {
       testExecutor(
           input: [
             'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
@@ -94,6 +94,34 @@ void main() {
             personalNumber: '',
             personalNumber2: null,
           ));
+    });
+
+    test('document number check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
+        'C01X00T470D<<6408125F2702283<<<<<<<4'
+      ]);
+    });
+
+    test('birth date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
+        'C01X00T478D<<6408120F2702283<<<<<<<4'
+      ]);
+    });
+
+    test('expiry date check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
+        'C01X00T478D<<6408125F2702280<<<<<<<4'
+      ]);
+    });
+
+    test('final check digit does not match returns null', () {
+      nullTestExecutor(input: [
+        'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
+        'C01X00T478D<<6408125F2702283<<<<<<<0'
+      ]);
     });
   });
 
