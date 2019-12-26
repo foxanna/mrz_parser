@@ -3,10 +3,8 @@ dart:
   - stable
 branches:
   only: [master]
-install:
-  - gem install coveralls-lcov
 deploy:
   provider: script
-  script: bash pub get;pub run test_coverage;coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
+  script: bash gem install coveralls-lcov;pub get;pub run test_coverage;coveralls-lcov --repo-token $COVERALLS_TOKEN coverage/lcov.info
   on:
     branch: master
