@@ -7,6 +7,6 @@ install:
   - gem install coveralls-lcov
 deploy:
   provider: script
-  script: bash tool/publish.sh
+  script: bash tool/ci.sh
   on:
     branch: master
