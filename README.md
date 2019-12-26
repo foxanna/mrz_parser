@@ -1,4 +1,5 @@
-# mrz_parser (Dart/Flutter)
+# mrz_parser (Dart/Flutter) 
+[![Build Status](https://travis-ci.org/olexale/mrz_parser.svg?branch=master)](https://travis-ci.org/olexale/mrz_parser) [![Coverage Status](https://coveralls.io/repos/github/olexale/mrz_parser/badge.svg?branch=master)](https://coveralls.io/github/olexale/mrz_parser?branch=master)
 
 Parse MRZ (Machine Readable Zone) from identity documents. Heavily insipred by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
 
