@@ -3,11 +3,10 @@ part of mrz_parser;
 class MRZCheckDigitCalculator {
   MRZCheckDigitCalculator._();
 
-  static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
   static final _weights = [7, 3, 1];
 
   static int getCheckDigit(String input) {
-    if (input == null || !_validInput.hasMatch(input)) {
+    if (!input.isValidMRZInput) {
       return null;
     }
 
