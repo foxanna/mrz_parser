@@ -138,7 +138,7 @@ void main() {
   });
 
   group('TD2 passport', () {
-    test('correct input parses', () {
+    test('correct input parses, long document number', () {
       testExecutor(
           input: [
             'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
@@ -150,6 +150,27 @@ void main() {
             surnames: 'MUSTERMANN',
             givenNames: 'ERIKA',
             documentNumber: 'C01X00T47',
+            nationalityCountryCode: 'D',
+            birthDate: DateTime(1964, 08, 12),
+            sex: Sex.female,
+            expiryDate: DateTime(2027, 02, 28),
+            personalNumber: '',
+            personalNumber2: null,
+          ));
+    });
+
+    test('correct input parses, short document number', () {
+      testExecutor(
+          input: [
+            'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
+            'C01X00<<<6D<<6408125F2702283<<<<<<<8'
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'P',
+            countryCode: 'D',
+            surnames: 'MUSTERMANN',
+            givenNames: 'ERIKA',
+            documentNumber: 'C01X00',
             nationalityCountryCode: 'D',
             birthDate: DateTime(1964, 08, 12),
             sex: Sex.female,
@@ -233,7 +254,7 @@ void main() {
   });
 
   group('TD3 passport', () {
-    test('correct input parses', () {
+    test('correct input parses, long document number', () {
       testExecutor(
           input: [
             'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
@@ -250,6 +271,48 @@ void main() {
             sex: Sex.female,
             expiryDate: DateTime(2012, 04, 15),
             personalNumber: 'ZE184226B',
+            personalNumber2: null,
+          ));
+    });
+
+    test('correct input parses, shorter document number', () {
+      testExecutor(
+          input: [
+            'P<AUSMCCABE<<NICOLE<SANDRA<<<<<<<<<<<<<<<<<<',
+            'L4041765<4AUS8211169F1305218<<<<<<<<<<<<<<00'
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'P',
+            countryCode: 'AUS',
+            surnames: 'MCCABE',
+            givenNames: 'NICOLE SANDRA',
+            documentNumber: 'L4041765',
+            nationalityCountryCode: 'AUS',
+            birthDate: DateTime(1982, 11, 16),
+            sex: Sex.female,
+            expiryDate: DateTime(2013, 05, 21),
+            personalNumber: '',
+            personalNumber2: null,
+          ));
+    });
+
+    test('correct input parses, no optional data and no check digit', () {
+      testExecutor(
+          input: [
+            'I<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
+            'D231458907UTO7408122F1204159<<<<<<<<<<<<<<<6'
+          ],
+          expectedOutput: MRZResult(
+            documentType: 'I',
+            countryCode: 'UTO',
+            surnames: 'ERIKSSON',
+            givenNames: 'ANNA MARIA',
+            documentNumber: 'D23145890',
+            nationalityCountryCode: 'UTO',
+            birthDate: DateTime(1974, 08, 12),
+            sex: Sex.female,
+            expiryDate: DateTime(2012, 04, 15),
+            personalNumber: '',
             personalNumber2: null,
           ));
     });

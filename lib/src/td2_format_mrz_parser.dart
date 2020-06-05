@@ -33,63 +33,78 @@ class _TD2MRZFormatParser {
     final optionalDataRaw = secondLine.substring(28, isVisaDocument ? 36 : 35);
     final finalCheckDigitRaw = isVisaDocument ? null : secondLine.substring(35);
 
-    final documentNumber =
-        MRZFieldFormatter.formatDocumentNumber(documentNumberRaw);
-    final documentNumberCheckDigit =
-        MRZFieldFormatter.formatCheckDigit(documentNumberCheckDigitRaw);
-    final documentNumberIsValid = int.tryParse(documentNumberCheckDigit) ==
-        MRZCheckDigitCalculator.getCheckDigit(documentNumber);
+    final documentTypeFixed =
+        MRZFieldRecognitionDefectsFixer.fixDocumentType(documentTypeRaw);
+    final countryCodeFixed =
+        MRZFieldRecognitionDefectsFixer.fixCountryCode(countryCodeRaw);
+    final namesFixed = MRZFieldRecognitionDefectsFixer.fixNames(namesRaw);
+    final documentNumberFixed = documentNumberRaw;
+    final documentNumberCheckDigitFixed =
+        MRZFieldRecognitionDefectsFixer.fixCheckDigit(
+            documentNumberCheckDigitRaw);
+    final nationalityFixed =
+        MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
+    final birthDateFixed =
+        MRZFieldRecognitionDefectsFixer.fixDate(birthDateRaw);
+    final birthDateCheckDigitFixed =
+        MRZFieldRecognitionDefectsFixer.fixCheckDigit(birthDateCheckDigitRaw);
+    final sexFixed = MRZFieldRecognitionDefectsFixer.fixSex(sexRaw);
+    final expiryDateFixed =
+        MRZFieldRecognitionDefectsFixer.fixDate(expiryDateRaw);
+    final expiryDateCheckDigitFixed =
+        MRZFieldRecognitionDefectsFixer.fixCheckDigit(expiryDateCheckDigitRaw);
+    final optionalDataFixed = optionalDataRaw;
+    final finalCheckDigitFixed =
+        MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw);
+
+    final documentNumberIsValid = int.tryParse(documentNumberCheckDigitFixed) ==
+        MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);
 
     if (!documentNumberIsValid) {
       return null;
     }
 
-    final birthDateString = MRZFieldFormatter.formatDate(birthDateRaw);
-    final birthDateCheckDigit =
-        MRZFieldFormatter.formatCheckDigit(birthDateCheckDigitRaw);
-    final birthDateIsValid = int.tryParse(birthDateCheckDigit) ==
-        MRZCheckDigitCalculator.getCheckDigit(birthDateString);
+    final birthDateIsValid = int.tryParse(birthDateCheckDigitFixed) ==
+        MRZCheckDigitCalculator.getCheckDigit(birthDateFixed);
 
     if (!birthDateIsValid) {
       return null;
     }
 
-    final expiryDateString = MRZFieldFormatter.formatDate(expiryDateRaw);
-    final expiryDateCheckDigit =
-        MRZFieldFormatter.formatCheckDigit(expiryDateCheckDigitRaw);
-    final expiryDateIsValid = int.tryParse(expiryDateCheckDigit) ==
-        MRZCheckDigitCalculator.getCheckDigit(expiryDateString);
+    final expiryDateIsValid = int.tryParse(expiryDateCheckDigitFixed) ==
+        MRZCheckDigitCalculator.getCheckDigit(expiryDateFixed);
 
     if (!expiryDateIsValid) {
       return null;
     }
 
-    if (finalCheckDigitRaw != null) {
-      final finalCheckDigit =
-          MRZFieldFormatter.formatCheckDigit(finalCheckDigitRaw);
-      final finalCheckString = documentNumber +
-          documentNumberCheckDigit +
-          birthDateString +
-          birthDateCheckDigit +
-          expiryDateString +
-          expiryDateCheckDigit +
-          optionalDataRaw;
-      final finalCheckStringIsValid = int.tryParse(finalCheckDigit) ==
-          MRZCheckDigitCalculator.getCheckDigit(finalCheckString);
+    if (finalCheckDigitFixed != null) {
+      final finalCheckStringFixed =
+          '$documentNumberFixed$documentNumberCheckDigitFixed'
+          '$birthDateFixed$birthDateCheckDigitFixed'
+          '$expiryDateFixed$expiryDateCheckDigitFixed'
+          '$optionalDataFixed';
+
+      final finalCheckStringIsValid = int.tryParse(finalCheckDigitFixed) ==
+          MRZCheckDigitCalculator.getCheckDigit(finalCheckStringFixed);
 
       if (!finalCheckStringIsValid) {
         return null;
       }
     }
 
-    final documentType = MRZFieldFormatter.formatDocumentType(documentTypeRaw);
-    final countryCode = MRZFieldFormatter.formatCountryCode(countryCodeRaw);
-    final names = MRZFieldFormatter.formatNames(namesRaw);
-    final nationality = MRZFieldFormatter.formatNationality(nationalityRaw);
-    final birthDate = MRZFieldFormatter.formatBirthDate(birthDateString);
-    final sex = MRZFieldFormatter.formatSex(sexRaw);
-    final expiryDate = MRZFieldFormatter.formatExpiryDate(expiryDateString);
-    final optionalData = MRZFieldFormatter.formatOptionalData(optionalDataRaw);
+    final documentType =
+        MRZFieldFormatter.formatDocumentType(documentTypeFixed);
+    final countryCode = MRZFieldFormatter.formatCountryCode(countryCodeFixed);
+    final names = MRZFieldFormatter.formatNames(namesFixed);
+    final documentNumber =
+        MRZFieldFormatter.formatDocumentNumber(documentNumberFixed);
+    final nationality = MRZFieldFormatter.formatNationality(nationalityFixed);
+    final birthDate = MRZFieldFormatter.formatBirthDate(birthDateFixed);
+    final sex = MRZFieldFormatter.formatSex(sexFixed);
+    final expiryDate = MRZFieldFormatter.formatExpiryDate(expiryDateFixed);
+    final optionalData =
+        MRZFieldFormatter.formatOptionalData(optionalDataFixed);
 
     return MRZResult(
       documentType: documentType,

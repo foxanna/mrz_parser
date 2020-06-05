@@ -10,6 +10,8 @@ void main() {
     expect(MRZCheckDigitCalculator.getCheckDigit('L898902C3'), 6);
     expect(MRZCheckDigitCalculator.getCheckDigit('C01X00T47'), 8);
     expect(MRZCheckDigitCalculator.getCheckDigit('990000516'), 4);
+    expect(MRZCheckDigitCalculator.getCheckDigit('M5127939<'), 2);
+    expect(MRZCheckDigitCalculator.getCheckDigit('L4041765<'), 4);
   });
 
   test('check birth date', () {

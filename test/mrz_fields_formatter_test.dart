@@ -42,13 +42,13 @@ void main() {
         equality.equals(MRZFieldFormatter.formatNames('<<<<<<<<<<<'), ['', '']),
         true);
   });
-
-  test('formats check digit', () {
-    expect(MRZFieldFormatter.formatCheckDigit('8'), '8');
-    expect(MRZFieldFormatter.formatCheckDigit('<6<'), '<6<');
-    expect(MRZFieldFormatter.formatCheckDigit('0QUDIZB'), '0000128');
-    expect(MRZFieldFormatter.formatCheckDigit('<<<<'), '<<<<');
-  });
+//
+//  test('formats check digit', () {
+//    expect(MRZFieldFormatter.formatCheckDigit('8'), '8');
+//    expect(MRZFieldFormatter.formatCheckDigit('<6<'), '<6<');
+//    expect(MRZFieldFormatter.formatCheckDigit('0QUDIZB'), '0000128');
+//    expect(MRZFieldFormatter.formatCheckDigit('<<<<'), '<<<<');
+//  });
 
   test('formats nationality', () {
     expect(MRZFieldFormatter.formatNationality('UA'), 'UA');
@@ -56,13 +56,13 @@ void main() {
     expect(MRZFieldFormatter.formatNationality('0128'), 'OIZB');
     expect(MRZFieldFormatter.formatNationality('<<<<'), '');
   });
-
-  test('formats date', () {
-    expect(MRZFieldFormatter.formatDate('190213'), '190213');
-    expect(MRZFieldFormatter.formatDate('<190213<<'), '190213');
-    expect(MRZFieldFormatter.formatDate('0QUDIZB'), '0000128');
-    expect(MRZFieldFormatter.formatDate('<<<<'), '');
-  });
+//
+//  test('formats date', () {
+//    expect(MRZFieldFormatter.formatDate('190213'), '190213');
+//    expect(MRZFieldFormatter.formatDate('<190213<<'), '190213');
+//    expect(MRZFieldFormatter.formatDate('0QUDIZB'), '0000128');
+//    expect(MRZFieldFormatter.formatDate('<<<<'), '');
+//  });
 
   test('formats birth date', () {
     expect(MRZFieldFormatter.formatBirthDate('170213'), DateTime(2017, 02, 13));
