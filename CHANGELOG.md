@@ -1,3 +1,16 @@
+## [1.1.0]
+
+Improvements:
+
+* Make `MRZParser.parse()` throw meaningful instances of `MRZException`
+* Support documents with document number shorted than 9 characters
+  ([#2](https://github.com/olexale/mrz_parser/issues/2))
+
+New features:
+
+* Provide `MRZParser.tryParse()` method which returns `null` if parsing
+  was unsuccessful
+
 ## [1.0.0] - First release
 
 First release with following formats:

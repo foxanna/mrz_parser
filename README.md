@@ -17,7 +17,7 @@ inspired by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
 Add to `pubspec.yaml`
 ```yaml
 dependencies:
-    mrz_parser: ^1.0.0
+    mrz_parser: ^1.1.0
 ```
 
 ### Parse MRZ
