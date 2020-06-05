@@ -4,19 +4,22 @@ import 'package:test/test.dart';
 void main() {
   final testExecutor = ({List<String> input, MRZResult expectedOutput}) =>
       expect(MRZParser.parse(input), expectedOutput);
-  final nullTestExecutor = ({List<String> input}) =>
-      testExecutor(input: input, expectedOutput: null);
+  final expectException = <T>({List<String> input}) =>
+      expect(() => MRZParser.parse(input), throwsA(isA<T>()));
 
-  group('invalid input returns null', () {
-    test('null input', () => nullTestExecutor(input: null));
+  group('invalid input throws $InvalidMRZInputException', () {
+    test('null input',
+        () => expectException<InvalidMRZInputException>(input: null));
 
-    test('1-line null input', () => nullTestExecutor(input: [null]));
+    test('1-line null input',
+        () => expectException<InvalidMRZInputException>(input: [null]));
 
-    test('1-line input', () => nullTestExecutor(input: ['0123456789']));
+    test('1-line input',
+        () => expectException<InvalidMRZInputException>(input: ['0123456789']));
 
     test(
         '4-lines input',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '0123456789',
               '0123456789',
               '0123456789',
@@ -24,7 +27,7 @@ void main() {
             ]));
     test(
         '3-lines input with 10 symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '0123456789',
               '0123456789',
               '0123456789',
@@ -32,7 +35,7 @@ void main() {
 
     test(
         '3-lines input with 40 symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '0123456789012345678901234567890123456789',
               '0123456789012345678901234567890123456789',
               '0123456789012345678901234567890123456789',
@@ -40,42 +43,42 @@ void main() {
 
     test(
         '2-lines input with 10 symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '0123456789',
               '0123456789',
             ]));
 
     test(
         '2-lines input with 40 symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '0123456789012345678901234567890123456789',
               '0123456789012345678901234567890123456789',
             ]));
 
     test(
         '2-lines input with 50 symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '01234567890123456789012345678901234567890123456789',
               '01234567890123456789012345678901234567890123456789',
             ]));
 
     test(
         '2-lines input with 36 invalid symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '012345678901234567890123456789!asdfg',
               '012345678901234567890123456789{}>,.?',
             ]));
 
     test(
         '2-lines input with 44 invalid symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '01234567890123456789012345678901234567!asdfg',
               '01234567890123456789012345678901234567{}>,.?',
             ]));
 
     test(
         '3-lines input with 30 invalid symbols',
-        () => nullTestExecutor(input: [
+        () => expectException<InvalidMRZInputException>(input: [
               '012345678901234567890123!asdfg',
               '012345678901234567890123{}>,.?',
             ]));
@@ -104,32 +107,39 @@ void main() {
           ));
     });
 
-    test('document number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () {
+      expectException<InvalidDocumentNumberException>(input: [
         'I<SWE59000002<0198703142391<<<',
         '8703145M1701027SWE<<<<<<<<<<<8',
         'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
       ]);
     });
 
-    test('birth date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () {
+      expectException<InvalidBirthDateException>(input: [
         'I<SWE59000002<8198703142391<<<',
         '8703140M1701027SWE<<<<<<<<<<<8',
         'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
       ]);
     });
 
-    test('expiry date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'expiry date check digit does not match throws $InvalidExpiryDateException',
+        () {
+      expectException<InvalidExpiryDateException>(input: [
         'I<SWE59000002<8198703142391<<<',
         '8703145M1701020SWE<<<<<<<<<<<8',
         'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
       ]);
     });
 
-    test('final check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test('final check digit does not match throws $InvalidMRZValueException',
+        () {
+      expectException<InvalidMRZValueException>(input: [
         'I<SWE59000002<8198703142391<<<',
         '8703145M1701027SWE<<<<<<<<<<<0',
         'SPECIMEN<<SVEN<<<<<<<<<<<<<<<<',
@@ -180,29 +190,36 @@ void main() {
           ));
     });
 
-    test('document number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () {
+      expectException<InvalidDocumentNumberException>(input: [
         'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
         'C01X00T470D<<6408125F2702283<<<<<<<4'
       ]);
     });
 
-    test('birth date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () {
+      expectException<InvalidBirthDateException>(input: [
         'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
         'C01X00T478D<<6408120F2702283<<<<<<<4'
       ]);
     });
 
-    test('expiry date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'expiry date check digit does not match rthrows $InvalidExpiryDateException',
+        () {
+      expectException<InvalidExpiryDateException>(input: [
         'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
         'C01X00T478D<<6408125F2702280<<<<<<<4'
       ]);
     });
 
-    test('final check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test('final check digit does not match throws $InvalidMRZValueException',
+        () {
+      expectException<InvalidMRZValueException>(input: [
         'P<D<<MUSTERMANN<<ERIKA<<<<<<<<<<<<<<',
         'C01X00T478D<<6408125F2702283<<<<<<<0'
       ]);
@@ -231,22 +248,28 @@ void main() {
           ));
     });
 
-    test('document number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () {
+      expectException<InvalidDocumentNumberException>(input: [
         'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
         '0005467<<0RUS7001017M1111019<M901101'
       ]);
     });
 
-    test('birth date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () {
+      expectException<InvalidBirthDateException>(input: [
         'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
         '0005467<<2RUS7001010M1111019<M901101'
       ]);
     });
 
-    test('expiry date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'expiry date check digit does not match throws $InvalidExpiryDateException',
+        () {
+      expectException<InvalidExpiryDateException>(input: [
         'VCFINMEIKAELAEINEN<<MATTI<<<<<<<<<<<',
         '0005467<<2RUS7001017M1111010<M901101'
       ]);
@@ -317,36 +340,45 @@ void main() {
           ));
     });
 
-    test('document number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () {
+      expectException<InvalidDocumentNumberException>(input: [
         'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
         'L898902C37UTO7408122F1204159ZE184226B<<<<<10'
       ]);
     });
 
-    test('birth date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () {
+      expectException<InvalidBirthDateException>(input: [
         'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
         'L898902C36UTO7408120F1204159ZE184226B<<<<<10'
       ]);
     });
 
-    test('expiry date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'expiry date check digit does not match throws $InvalidExpiryDateException',
+        () {
+      expectException<InvalidExpiryDateException>(input: [
         'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
         'L898902C36UTO7408122F1204150ZE184226B<<<<<10'
       ]);
     });
 
-    test('personal number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'personal number check digit does not match throws $InvalidOptionalDataException',
+        () {
+      expectException<InvalidOptionalDataException>(input: [
         'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
         'L898902C36UTO7408122F1204159ZE184226B<<<<<00'
       ]);
     });
 
-    test('final check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test('final check digit does not match throws $InvalidMRZValueException',
+        () {
+      expectException<InvalidMRZValueException>(input: [
         'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
         'L898902C36UTO7408122F1204159ZE184226B<<<<<19'
       ]);
@@ -375,22 +407,28 @@ void main() {
           ));
     });
 
-    test('document number check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () {
+      expectException<InvalidDocumentNumberException>(input: [
         'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
         '12345678<0KOR5001013F1304071B3SE000IL4243934'
       ]);
     });
 
-    test('birth date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () {
+      expectException<InvalidBirthDateException>(input: [
         'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
         '12345678<8KOR5001010F1304071B3SE000IL4243934'
       ]);
     });
 
-    test('expiry date check digit does not match returns null', () {
-      nullTestExecutor(input: [
+    test(
+        'expiry date check digit does not match throws $InvalidExpiryDateException',
+        () {
+      expectException<InvalidExpiryDateException>(input: [
         'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
         '12345678<8KOR5001013F1304070B3SE000IL4243934'
       ]);

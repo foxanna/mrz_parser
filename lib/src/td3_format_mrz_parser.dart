@@ -12,7 +12,7 @@ class _TD3MRZFormatParser {
 
   static MRZResult parse(List<String> input) {
     if (!isValidInput(input)) {
-      return null;
+      throw const InvalidMRZInputException();
     }
 
     final firstLine = input[0];
@@ -65,21 +65,21 @@ class _TD3MRZFormatParser {
         MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);
 
     if (!documentNumberIsValid) {
-      return null;
+      throw const InvalidDocumentNumberException();
     }
 
     final birthDateIsValid = int.tryParse(birthDateCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(birthDateFixed);
 
     if (!birthDateIsValid) {
-      return null;
+      throw const InvalidBirthDateException();
     }
 
     final expiryDateIsValid = int.tryParse(expiryDateCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(expiryDateFixed);
 
     if (!expiryDateIsValid) {
-      return null;
+      throw const InvalidExpiryDateException();
     }
 
     if (optionalDataCheckDigitFixed != null) {
@@ -89,7 +89,7 @@ class _TD3MRZFormatParser {
               MRZFieldFormatter.formatOptionalData(optionalDataFixed).isEmpty);
 
       if (!optionalDataIsValid) {
-        return null;
+        throw const InvalidOptionalDataException();
       }
     }
 
@@ -104,7 +104,7 @@ class _TD3MRZFormatParser {
           MRZCheckDigitCalculator.getCheckDigit(finalCheckStringFixed);
 
       if (!finalCheckStringIsValid) {
-        return null;
+        throw const InvalidMRZValueException();
       }
     }
 

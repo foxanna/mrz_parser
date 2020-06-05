@@ -1,5 +1,6 @@
 library mrz_parser;
 
+import 'package:mrz_parser/src/mrz_exceptions.dart';
 import 'package:mrz_parser/src/mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
@@ -16,7 +17,7 @@ class MRZParser {
   static MRZResult parse(List<String> input) {
     input = _polishInput(input);
     if (input == null) {
-      return null;
+      throw const InvalidMRZInputException();
     }
 
     if (_TD1MRZFormatParser.isValidInput(input)) {
@@ -29,7 +30,7 @@ class MRZParser {
       return _TD3MRZFormatParser.parse(input);
     }
 
-    return null;
+    throw const InvalidMRZInputException();
   }
 
   static List<String> _polishInput(List<String> input) {
