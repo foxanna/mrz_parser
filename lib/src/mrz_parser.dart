@@ -14,6 +14,11 @@ part 'td3_format_mrz_parser.dart';
 class MRZParser {
   MRZParser._();
 
+  /// Parse [input] and return [MRZResult] instance.
+  ///
+  /// Like [parse] except that this function returns `null` where a
+  /// similar call to [parse] would throw a [MRZException]
+  /// in case of invalid input or unsuccessful parsing
   static MRZResult tryParse(List<String> input) {
     try {
       return parse(input);
@@ -22,6 +27,13 @@ class MRZParser {
     }
   }
 
+  /// Parse [input] and return [MRZResult] instance.
+  ///
+  /// The [input] must be a non-null non-empty List of lines
+  /// from a documents machine-readable zone.
+  ///
+  /// If [input] format is invalid or parsing was unsuccessful,
+  /// an instance of [MRZException] is thrown
   static MRZResult parse(List<String> input) {
     input = _polishInput(input);
     if (input == null) {

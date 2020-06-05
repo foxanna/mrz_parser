@@ -6,7 +6,7 @@ void main() {
     'L898902C36UTO7408122F1204159ZE184226B<<<<<10'
   ];
 
-  final result = MRZParser.parse(mrz);
+  final result = MRZParser.tryParse(mrz);
 
   print(result.documentType); // 'P'
   print(result.countryCode); // 'UTO'

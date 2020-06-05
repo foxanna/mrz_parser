@@ -1,7 +1,8 @@
 # mrz_parser (Dart/Flutter) 
 [![Build Status](https://travis-ci.org/olexale/mrz_parser.svg?branch=master)](https://travis-ci.org/olexale/mrz_parser) [![Coverage Status](https://coveralls.io/repos/github/olexale/mrz_parser/badge.svg?branch=master)](https://coveralls.io/github/olexale/mrz_parser?branch=master)
 
-Parse MRZ (Machine Readable Zone) from identity documents. Heavily insipred by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
+Parse MRZ (Machine Readable Zone) from identity documents. Heavily
+inspired by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
 
 ### Supported formats:
 * TD1
@@ -26,7 +27,14 @@ final mrz = <String>[
   'L898902C36UTO7408122F1204159ZE184226B<<<<<10'
 ];
 
-final result = MRZParser.parse(mrz);
+final result = MRZParser.tryParse(mrz);
+
+// Alternatively use parse and catch MRZException descendants
+try {
+  final result = MRZParser.parse(mrz);
+} on MRZException catch(e) {
+  print(e);
+}
 ```
 
 ## Authors
