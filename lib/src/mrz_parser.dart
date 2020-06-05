@@ -14,6 +14,14 @@ part 'td3_format_mrz_parser.dart';
 class MRZParser {
   MRZParser._();
 
+  static MRZResult tryParse(List<String> input) {
+    try {
+      return parse(input);
+    } on Exception {
+      return null;
+    }
+  }
+
   static MRZResult parse(List<String> input) {
     input = _polishInput(input);
     if (input == null) {

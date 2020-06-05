@@ -433,5 +433,31 @@ void main() {
         '12345678<8KOR5001013F1304070B3SE000IL4243934'
       ]);
     });
+
+  group('tryParse', () {
+    test('invalid input returns null',
+        () => expect(MRZParser.tryParse(null), null));
+
+    test(
+        'correct input parses',
+        () => expect(
+              MRZParser.tryParse([
+                'VNUSATRAVELER<<HAPPY<<<<<<<<<<<<<<<<<<<<<<<<',
+                '12345678<8KOR5001013F1304071B3SE000IL4243934'
+              ]),
+              MRZResult(
+                documentType: 'VN',
+                countryCode: 'USA',
+                surnames: 'TRAVELER',
+                givenNames: 'HAPPY',
+                documentNumber: '12345678',
+                nationalityCountryCode: 'KOR',
+                birthDate: DateTime(1950, 01, 01),
+                sex: Sex.female,
+                expiryDate: DateTime(2013, 04, 07),
+                personalNumber: 'B3SE000IL4243934',
+                personalNumber2: null,
+              ),
+            ));
   });
 }
