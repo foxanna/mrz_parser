@@ -95,20 +95,17 @@ class _TD1MRZFormatParser {
       }
     }
 
-    final documentType =
-        MRZFieldFormatter.formatDocumentType(documentTypeFixed);
-    final countryCode = MRZFieldFormatter.formatCountryCode(countryCodeFixed);
+    final documentType = MRZFieldParser.parseDocumentType(documentTypeFixed);
+    final countryCode = MRZFieldParser.parseCountryCode(countryCodeFixed);
     final documentNumber =
-        MRZFieldFormatter.formatDocumentNumber(documentNumberFixed);
-    final optionalData =
-        MRZFieldFormatter.formatOptionalData(optionalDataFixed);
-    final birthDate = MRZFieldFormatter.formatBirthDate(birthDateFixed);
-    final sex = MRZFieldFormatter.formatSex(sexFixed);
-    final expiryDate = MRZFieldFormatter.formatExpiryDate(expiryDateFixed);
-    final nationality = MRZFieldFormatter.formatNationality(nationalityFixed);
-    final optionalData2 =
-        MRZFieldFormatter.formatOptionalData(optionalData2Fixed);
-    final names = MRZFieldFormatter.formatNames(namesFixed);
+        MRZFieldParser.parseDocumentNumber(documentNumberFixed);
+    final optionalData = MRZFieldParser.parseOptionalData(optionalDataFixed);
+    final birthDate = MRZFieldParser.parseBirthDate(birthDateFixed);
+    final sex = MRZFieldParser.parseSex(sexFixed);
+    final expiryDate = MRZFieldParser.parseExpiryDate(expiryDateFixed);
+    final nationality = MRZFieldParser.parseNationality(nationalityFixed);
+    final optionalData2 = MRZFieldParser.parseOptionalData(optionalData2Fixed);
+    final names = MRZFieldParser.parseNames(namesFixed);
 
     return MRZResult(
       documentType: documentType,

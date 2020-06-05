@@ -4,7 +4,7 @@ import 'package:mrz_parser/src/mrz_exceptions.dart';
 import 'package:mrz_parser/src/mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
-part 'mrz_field_formatter.dart';
+part 'mrz_field_parser.dart';
 part 'mrz_field_recognition_defects_fixer.dart';
 part 'mrz_string_extensions.dart';
 part 'td1_format_mrz_parser.dart';

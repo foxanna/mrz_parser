@@ -1,41 +1,41 @@
 part of mrz_parser;
 
-class MRZFieldFormatter {
-  MRZFieldFormatter._();
+class MRZFieldParser {
+  MRZFieldParser._();
 
-  static String formatDocumentNumber(String input) => _trim(input);
+  static String parseDocumentNumber(String input) => _trim(input);
 
-  static String formatDocumentType(String input) => _trim(input);
+  static String parseDocumentType(String input) => _trim(input);
 
-  static String formatCountryCode(String input) => _trim(input);
+  static String parseCountryCode(String input) => _trim(input);
 
-  static List<String> formatNames(String input) {
+  static String parseNationality(String input) => _trim(input);
+
+  static String parseOptionalData(String input) => _trim(input);
+
+  static List<String> parseNames(String input) {
     input = input.trimChar('<');
     final split = input.split('<<');
     final result = [
-      split.isNotEmpty ? split[0].replaceAngleBracketsWithSpaces().trim() : '',
-      split.length > 1 ? split[1].replaceAngleBracketsWithSpaces().trim() : '',
+      split.isNotEmpty ? _trim(split[0]) : '',
+      split.length > 1 ? _trim(split[1]) : '',
     ];
     return result;
   }
 
-  static String formatNationality(String input) => _trim(input);
-
-  static DateTime formatBirthDate(String input) {
+  static DateTime parseBirthDate(String input) {
     input = _formatDate(input);
     return input.isNumeric
         ? _parseDate(input, DateTime.now().year - 2000)
         : null;
   }
 
-  static DateTime formatExpiryDate(String input) {
+  static DateTime parseExpiryDate(String input) {
     input = _formatDate(input);
     return input.isNumeric ? _parseDate(input, 70) : null;
   }
 
-  static String formatOptionalData(String input) => _trim(input);
-
-  static Sex formatSex(String input) {
+  static Sex parseSex(String input) {
     switch (input) {
       case 'M':
         return Sex.male;
