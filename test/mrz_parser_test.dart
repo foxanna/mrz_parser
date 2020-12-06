@@ -447,6 +447,167 @@ void main() {
             ));
   });
 
+  group('French ID', () {
+    test(
+        'correct input parses',
+        () => expectResult(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '8806923102858CORINNE<<<<<<<6512068F6'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'BERTHIER',
+                givenNames: 'CORINNE',
+                documentNumber: '880692310285',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(1965, 12, 06),
+                sex: Sex.female,
+                expiryDate: DateTime(1998, 06, 01),
+                personalNumber: '',
+                personalNumber2: '923',
+              ),
+            ));
+
+    test(
+        'correct input with department and office in first line parses',
+        () => expectResult(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<923255',
+                '8806923102858CORINNE<<<<<<<6512068F2'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'BERTHIER',
+                givenNames: 'CORINNE',
+                documentNumber: '880692310285',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(1965, 12, 06),
+                sex: Sex.female,
+                expiryDate: DateTime(1998, 06, 01),
+                personalNumber: '923255',
+                personalNumber2: '923',
+              ),
+            ));
+
+    test(
+        'correct input with multiple names parses',
+        () => expectResult(
+              input: [
+                'IDFRALOISEAU<<<<<<<<<<<<<<<<<<<<<<<<',
+                '970675K002774HERVE<<DJAMEL<7303216M4'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'LOISEAU',
+                givenNames: 'HERVE DJAMEL',
+                documentNumber: '970675K00277',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(1973, 03, 21),
+                sex: Sex.male,
+                expiryDate: DateTime(2007, 06, 01),
+                personalNumber: '',
+                personalNumber2: '75K',
+              ),
+            ));
+
+    test(
+        'issued before Jan 2014 valid for 10 years',
+        () => expectResult(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '8806923102858CORINNE<<<<<<<6512068F6'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'BERTHIER',
+                givenNames: 'CORINNE',
+                documentNumber: '880692310285',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(1965, 12, 06),
+                sex: Sex.female,
+                expiryDate: DateTime(1998, 06, 01),
+                personalNumber: '',
+                personalNumber2: '923',
+              ),
+            ));
+
+    test(
+        'issued after Jan 2014 for adult valid for 15 years',
+        () => expectResult(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '1506923102850CORINNE<<<<<<<6512068F2'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'BERTHIER',
+                givenNames: 'CORINNE',
+                documentNumber: '150692310285',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(1965, 12, 06),
+                sex: Sex.female,
+                expiryDate: DateTime(2030, 06, 01),
+                personalNumber: '',
+                personalNumber2: '923',
+              ),
+            ));
+
+    test(
+        'issued after Jan 2014 for minor valid for 10 years',
+        () => expectResult(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '1506923102850CORINNE<<<<<<<0012061F6'
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'FRA',
+                surnames: 'BERTHIER',
+                givenNames: 'CORINNE',
+                documentNumber: '150692310285',
+                nationalityCountryCode: 'FRA',
+                birthDate: DateTime(2000, 12, 06),
+                sex: Sex.female,
+                expiryDate: DateTime(2025, 06, 01),
+                personalNumber: '',
+                personalNumber2: '923',
+              ),
+            ));
+
+    test(
+        'document number check digit does not match throws $InvalidDocumentNumberException',
+        () => expectException<InvalidDocumentNumberException>(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '8806923102850CORINNE<<<<<<<6512068F6'
+              ],
+            ));
+
+    test(
+        'birth date check digit does not match throws $InvalidBirthDateException',
+        () => expectException<InvalidBirthDateException>(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '8806923102858CORINNE<<<<<<<6512060F6'
+              ],
+            ));
+
+    test(
+        'final check digit does not match throws $InvalidMRZValueException',
+        () => expectException<InvalidMRZValueException>(
+              input: [
+                'IDFRABERTHIER<<<<<<<<<<<<<<<<<<<<<<<',
+                '8806923102858CORINNE<<<<<<<6512068F0'
+              ],
+            ));
+  });
+
   group('tryParse', () {
     test('invalid input returns null',
         () => expect(MRZParser.tryParse(null), null));
