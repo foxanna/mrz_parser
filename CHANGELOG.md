@@ -1,3 +1,7 @@
+## [1.2.0]
+
+* French Id format support
+
 ## [1.1.0]
 
 Improvements:
