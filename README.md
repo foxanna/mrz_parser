@@ -17,12 +17,12 @@ inspired by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
 Add to `pubspec.yaml`
 ```yaml
 dependencies:
-    mrz_parser: ^1.1.0
+    mrz_parser: ^2.0.0
 ```
 
 ### Parse MRZ
 ```dart
-final mrz = <String>[
+final mrz = [
   'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<',
   'L898902C36UTO7408122F1204159ZE184226B<<<<<10'
 ];
