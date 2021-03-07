@@ -1,3 +1,7 @@
+## [2.0.0]
+
+* Support null-safety
+
 ## [1.2.0]
 
 * French Id format support
