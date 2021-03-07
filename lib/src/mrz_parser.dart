@@ -1,7 +1,7 @@
 library mrz_parser;
 
-import 'package:mrz_parser/src/mrz_exceptions.dart';
-import 'package:mrz_parser/src/mrz_result.dart';
+import 'mrz_exceptions.dart';
+import 'mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
 part 'mrz_field_parser.dart';

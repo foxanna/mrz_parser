@@ -14,11 +14,10 @@ class MRZFieldParser {
   static String parseOptionalData(String input) => _trim(input);
 
   static List<String> parseNames(String input) {
-    input = input.trimChar('<');
-    final split = input.split('<<');
+    final words = input.trimChar('<').split('<<');
     final result = [
-      split.isNotEmpty ? _trim(split[0]) : '',
-      split.length > 1 ? _trim(split[1]) : '',
+      words.isNotEmpty ? _trim(words[0]) : '',
+      words.length > 1 ? _trim(words[1]) : '',
     ];
     return result;
   }
