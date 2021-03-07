@@ -58,8 +58,9 @@ class _TD2MRZFormatParser {
     final expiryDateCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(expiryDateCheckDigitRaw);
     final optionalDataFixed = optionalDataRaw;
-    final finalCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw);
+    final finalCheckDigitFixed = finalCheckDigitRaw != null
+        ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw)
+        : null;
 
     final documentNumberIsValid = int.tryParse(documentNumberCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);
@@ -199,11 +200,11 @@ class _TD2MRZFormatParser {
     final documentType = MRZFieldParser.parseDocumentType(documentTypeFixed);
     final countryCode = MRZFieldParser.parseCountryCode(countryCodeFixed);
     final givenNames = MRZFieldParser.parseNames(givenNamesFixed)
-        .where((element) => element?.isNotEmpty ?? false)
+        .where((element) => element.isNotEmpty)
         .toList()
         .join(' ');
     final lastNames = MRZFieldParser.parseNames(lastNamesFixed)
-        .where((element) => element?.isNotEmpty ?? false)
+        .where((element) => element.isNotEmpty)
         .toList()
         .join(' ');
     final documentNumber =

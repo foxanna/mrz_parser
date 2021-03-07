@@ -1,5 +1,5 @@
 abstract class MRZException implements Exception {
-  const MRZException([this.message]);
+  const MRZException(this.message);
 
   final String message;
 

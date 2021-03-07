@@ -6,10 +6,6 @@ class MRZCheckDigitCalculator {
   static final _weights = [7, 3, 1];
 
   static int getCheckDigit(String input) {
-    if (!input.isValidMRZInput) {
-      return null;
-    }
-
     final checkSum = input.codeUnits
         .map((c) {
           if (_isCapitalLetter(c)) {

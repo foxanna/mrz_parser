@@ -19,7 +19,7 @@ class MRZParser {
   /// Like [parse] except that this function returns `null` where a
   /// similar call to [parse] would throw a [MRZException]
   /// in case of invalid input or unsuccessful parsing
-  static MRZResult tryParse(List<String> input) {
+  static MRZResult? tryParse(List<String?>? input) {
     try {
       return parse(input);
     } on Exception {
@@ -34,32 +34,33 @@ class MRZParser {
   ///
   /// If [input] format is invalid or parsing was unsuccessful,
   /// an instance of [MRZException] is thrown
-  static MRZResult parse(List<String> input) {
-    input = _polishInput(input);
-    if (input == null) {
+  static MRZResult parse(List<String?>? input) {
+    final polishedInput = _polishInput(input);
+    if (polishedInput == null) {
       throw const InvalidMRZInputException();
     }
 
-    if (_TD1MRZFormatParser.isValidInput(input)) {
-      return _TD1MRZFormatParser.parse(input);
+    if (_TD1MRZFormatParser.isValidInput(polishedInput)) {
+      return _TD1MRZFormatParser.parse(polishedInput);
     }
-    if (_TD2MRZFormatParser.isValidInput(input)) {
-      return _TD2MRZFormatParser.parse(input);
+    if (_TD2MRZFormatParser.isValidInput(polishedInput)) {
+      return _TD2MRZFormatParser.parse(polishedInput);
     }
-    if (_TD3MRZFormatParser.isValidInput(input)) {
-      return _TD3MRZFormatParser.parse(input);
+    if (_TD3MRZFormatParser.isValidInput(polishedInput)) {
+      return _TD3MRZFormatParser.parse(polishedInput);
     }
 
     throw const InvalidMRZInputException();
   }
 
-  static List<String> _polishInput(List<String> input) {
+  static List<String>? _polishInput(List<String?>? input) {
     if (input == null) {
       return null;
     }
 
-    input = input.map((s) => s?.toUpperCase()).toList();
+    final polishedInput =
+        input.where((s) => s != null).map((s) => s!.toUpperCase()).toList();
 
-    return input.any((s) => !s.isValidMRZInput) ? null : input;
+    return polishedInput.any((s) => !s.isValidMRZInput) ? null : polishedInput;
   }
 }

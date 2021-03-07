@@ -24,15 +24,13 @@ class MRZFieldParser {
   }
 
   static DateTime parseBirthDate(String input) {
-    input = _formatDate(input);
-    return input.isNumeric
-        ? _parseDate(input, DateTime.now().year - 2000)
-        : null;
+    final formattedInput = _formatDate(input);
+    return _parseDate(formattedInput, DateTime.now().year - 2000);
   }
 
   static DateTime parseExpiryDate(String input) {
-    input = _formatDate(input);
-    return input.isNumeric ? _parseDate(input, 70) : null;
+    final formattedInput = _formatDate(input);
+    return _parseDate(formattedInput, 70);
   }
 
   static Sex parseSex(String input) {
@@ -49,12 +47,11 @@ class MRZFieldParser {
   static String _formatDate(String input) => _trim(input);
 
   static DateTime _parseDate(String input, int milestoneYear) {
-    final parsedYear = int.tryParse(input.substring(0, 2));
+    final parsedYear = int.parse(input.substring(0, 2));
     final centennial = (parsedYear > milestoneYear) ? '19' : '20';
-
-    return DateTime.tryParse(centennial + input);
+    return DateTime.parse(centennial + input);
   }
 
   static String _trim(String input) =>
-      input?.replaceAngleBracketsWithSpaces()?.trim();
+      input.replaceAngleBracketsWithSpaces().trim();
 }

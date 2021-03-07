@@ -55,11 +55,13 @@ class _TD3MRZFormatParser {
     final expiryDateCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(expiryDateCheckDigitRaw);
     final optionalDataFixed = optionalDataRaw;
-    final optionalDataCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            optionalDataCheckDigitRaw);
-    final finalCheckDigitFixed =
-        MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw);
+    final optionalDataCheckDigitFixed = optionalDataCheckDigitRaw != null
+        ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(
+            optionalDataCheckDigitRaw)
+        : null;
+    final finalCheckDigitFixed = finalCheckDigitRaw != null
+        ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw)
+        : null;
 
     final documentNumberIsValid = int.tryParse(documentNumberCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);

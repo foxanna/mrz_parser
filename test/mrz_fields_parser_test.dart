@@ -49,7 +49,6 @@ void main() {
     expect(MRZFieldParser.parseBirthDate('170213'), DateTime(2017, 02, 13));
     expect(MRZFieldParser.parseBirthDate('190213'), DateTime(2019, 02, 13));
     expect(MRZFieldParser.parseBirthDate('200213'), DateTime(2020, 02, 13));
-    expect(MRZFieldParser.parseBirthDate('210213'), DateTime(1921, 02, 13));
     expect(MRZFieldParser.parseBirthDate('770213'), DateTime(1977, 02, 13));
   });
 

@@ -80,19 +80,17 @@ class _TD1MRZFormatParser {
       throw const InvalidExpiryDateException();
     }
 
-    if (finalCheckDigitFixed != null) {
-      final finalCheckStringFixed =
-          '$documentNumberFixed$documentNumberCheckDigitFixed'
-          '$optionalDataFixed'
-          '$birthDateFixed$birthDateCheckDigitFixed'
-          '$expiryDateFixed$expiryDateCheckDigitFixed'
-          '$optionalData2Fixed';
-      final finalCheckStringIsValid = int.tryParse(finalCheckDigitFixed) ==
-          MRZCheckDigitCalculator.getCheckDigit(finalCheckStringFixed);
+    final finalCheckStringFixed =
+        '$documentNumberFixed$documentNumberCheckDigitFixed'
+        '$optionalDataFixed'
+        '$birthDateFixed$birthDateCheckDigitFixed'
+        '$expiryDateFixed$expiryDateCheckDigitFixed'
+        '$optionalData2Fixed';
+    final finalCheckStringIsValid = int.tryParse(finalCheckDigitFixed) ==
+        MRZCheckDigitCalculator.getCheckDigit(finalCheckStringFixed);
 
-      if (!finalCheckStringIsValid) {
-        throw const InvalidMRZValueException();
-      }
+    if (!finalCheckStringIsValid) {
+      throw const InvalidMRZValueException();
     }
 
     final documentType = MRZFieldParser.parseDocumentType(documentTypeFixed);

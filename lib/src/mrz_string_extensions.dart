@@ -2,14 +2,11 @@ part of mrz_parser;
 
 extension _MRZStringExtensions on String {
   static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
-  static final _numeric = RegExp(r'^[0-9]+$');
 
-  bool get isValidMRZInput => this != null && _validInput.hasMatch(this);
-
-  bool get isNumeric => this != null && _numeric.hasMatch(this);
+  bool get isValidMRZInput => _validInput.hasMatch(this);
 
   String trimChar(String char) {
-    if (this == null || isEmpty || char == null || char.isEmpty) {
+    if (isEmpty || char.isEmpty) {
       return this;
     }
 

@@ -2,16 +2,16 @@ enum Sex { none, male, female }
 
 class MRZResult {
   const MRZResult({
-    this.documentType,
-    this.countryCode,
-    this.surnames,
-    this.givenNames,
-    this.documentNumber,
-    this.nationalityCountryCode,
-    this.birthDate,
-    this.sex,
-    this.expiryDate,
-    this.personalNumber,
+    required this.documentType,
+    required this.countryCode,
+    required this.surnames,
+    required this.givenNames,
+    required this.documentNumber,
+    required this.nationalityCountryCode,
+    required this.birthDate,
+    required this.sex,
+    required this.expiryDate,
+    required this.personalNumber,
     this.personalNumber2,
   });
 
@@ -25,7 +25,7 @@ class MRZResult {
   final Sex sex;
   final DateTime expiryDate;
   final String personalNumber;
-  final String personalNumber2;
+  final String? personalNumber2;
 
   @override
   bool operator ==(Object other) =>
