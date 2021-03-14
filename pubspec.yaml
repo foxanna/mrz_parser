@@ -7,7 +7,7 @@ authors:
 homepage: https://github.com/olexale/mrz_parser
 
 environment:
-  sdk: ">=2.12.0-0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dev_dependencies:
   collection: ^1.15.0
