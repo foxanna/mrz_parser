@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class _TD2MRZFormatParser {
   _TD2MRZFormatParser._();
@@ -6,11 +6,11 @@ class _TD2MRZFormatParser {
   static const _linesLength = 36;
   static const _linesCount = 2;
 
-  static bool isValidInput(List<String> input) =>
+  static bool isValidInput(final List<String> input) =>
       input.length == _linesCount &&
-      input.every((s) => s.length == _linesLength);
+      input.every((final s) => s.length == _linesLength);
 
-  static MRZResult parse(List<String> input) {
+  static MRZResult parse(final List<String> input) {
     if (!isValidInput(input)) {
       throw const InvalidMRZInputException();
     }
@@ -124,10 +124,10 @@ class _TD2MRZFormatParser {
     );
   }
 
-  static bool _isFrenchId(List<String> input) =>
+  static bool _isFrenchId(final List<String> input) =>
       input[0][0] == 'I' && input[0].substring(2, 5) == 'FRA';
 
-  static MRZResult _parseFrenchId(List<String> input) {
+  static MRZResult _parseFrenchId(final List<String> input) {
     final firstLine = input[0];
     final secondLine = input[1];
 
@@ -200,11 +200,11 @@ class _TD2MRZFormatParser {
     final documentType = MRZFieldParser.parseDocumentType(documentTypeFixed);
     final countryCode = MRZFieldParser.parseCountryCode(countryCodeFixed);
     final givenNames = MRZFieldParser.parseNames(givenNamesFixed)
-        .where((element) => element.isNotEmpty)
+        .where((final element) => element.isNotEmpty)
         .toList()
         .join(' ');
     final lastNames = MRZFieldParser.parseNames(lastNamesFixed)
-        .where((element) => element.isNotEmpty)
+        .where((final element) => element.isNotEmpty)
         .toList()
         .join(' ');
     final documentNumber =

@@ -2,10 +2,11 @@ import 'package:mrz_parser/mrz_parser.dart';
 import 'package:test/test.dart';
 
 void main() {
-  final expectResult = ({List<String?>? input, MRZResult? expectedOutput}) =>
+  final expectResult = (
+          {final List<String?>? input, final MRZResult? expectedOutput}) =>
       expect(MRZParser.parse(input), expectedOutput);
 
-  final expectException = <T>({List<String?>? input}) =>
+  final expectException = <T>({final List<String?>? input}) =>
       expect(() => MRZParser.parse(input), throwsA(isA<T>()));
 
   group('invalid input throws $InvalidMRZInputException', () {

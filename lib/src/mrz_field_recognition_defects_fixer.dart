@@ -1,25 +1,25 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class MRZFieldRecognitionDefectsFixer {
   MRZFieldRecognitionDefectsFixer._();
 
-  static String fixDocumentType(String input) =>
+  static String fixDocumentType(final String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixCheckDigit(String input) =>
+  static String fixCheckDigit(final String input) =>
       input.replaceSimilarLettersWithDigits();
 
-  static String fixDate(String input) =>
+  static String fixDate(final String input) =>
       input.replaceSimilarLettersWithDigits();
 
-  static String fixSex(String input) => input.replaceAll('P', 'F');
+  static String fixSex(final String input) => input.replaceAll('P', 'F');
 
-  static String fixCountryCode(String input) =>
+  static String fixCountryCode(final String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixNames(String input) =>
+  static String fixNames(final String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixNationality(String input) =>
+  static String fixNationality(final String input) =>
       input.replaceSimilarDigitsWithLetters();
 }

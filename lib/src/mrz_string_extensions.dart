@@ -1,11 +1,11 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 extension _MRZStringExtensions on String {
   static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
 
   bool get isValidMRZInput => _validInput.hasMatch(this);
 
-  String trimChar(String char) {
+  String trimChar(final String char) {
     if (isEmpty || char.isEmpty) {
       return this;
     }
