@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class _TD3MRZFormatParser {
   _TD3MRZFormatParser._();
@@ -6,11 +6,11 @@ class _TD3MRZFormatParser {
   static const _linesLength = 44;
   static const _linesCount = 2;
 
-  static bool isValidInput(List<String> input) =>
+  static bool isValidInput(final List<String> input) =>
       input.length == _linesCount &&
-      input.every((s) => s.length == _linesLength);
+      input.every((final s) => s.length == _linesLength);
 
-  static MRZResult parse(List<String> input) {
+  static MRZResult parse(final List<String> input) {
     if (!isValidInput(input)) {
       throw const InvalidMRZInputException();
     }

@@ -28,7 +28,7 @@ class MRZResult {
   final String? personalNumber2;
 
   @override
-  bool operator ==(Object other) =>
+  bool operator ==(final Object other) =>
       identical(this, other) ||
       other is MRZResult &&
           runtimeType == other.runtimeType &&

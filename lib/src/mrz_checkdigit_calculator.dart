@@ -1,13 +1,13 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class MRZCheckDigitCalculator {
   MRZCheckDigitCalculator._();
 
   static final _weights = [7, 3, 1];
 
-  static int getCheckDigit(String input) {
+  static int getCheckDigit(final String input) {
     final checkSum = input.codeUnits
-        .map((c) {
+        .map((final c) {
           if (_isCapitalLetter(c)) {
             return c - _A + 10;
           }
@@ -18,16 +18,17 @@ class MRZCheckDigitCalculator {
         })
         .toList()
         .asMap()
-        .map((i, v) => MapEntry(i, v * _weights[i % _weights.length]))
+        .map((final i, final v) =>
+            MapEntry(i, v * _weights[i % _weights.length]))
         .values
-        .reduce((value, element) => value + element);
+        .reduce((final value, final element) => value + element);
 
     return checkSum % 10;
   }
 
-  static bool _isCapitalLetter(int c) => c >= _A && c <= _Z;
+  static bool _isCapitalLetter(final int c) => c >= _A && c <= _Z;
 
-  static bool _isDigit(int c) => c >= _0 && c <= _9;
+  static bool _isDigit(final int c) => c >= _0 && c <= _9;
 
   static const int _A = 65;
   static const int _Z = 90;
