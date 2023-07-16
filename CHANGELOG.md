@@ -1,3 +1,7 @@
+## [2.0.1]
+
+* Support Dart 3, while maintaining backward compatibility with Dart 2
+
 ## [2.0.0]
 
 * Support null-safety
