@@ -108,6 +108,28 @@ void main() {
                 personalNumber2: '',
               ),
             ));
+    test(
+        'correct input with long document number (Belgian ID card from PRADO)',
+        () => expectResult(
+              input: [
+                'IDBEL600001476<9355<<<<<<<<<<<',
+                '1301014F2311207UT0130101987390',
+                'SPECIMEN<<SPECIMEN<<<<<<<<<<<<',
+              ],
+              expectedOutput: MRZResult(
+                documentType: 'ID',
+                countryCode: 'BEL',
+                surnames: 'SPECIMEN',
+                givenNames: 'SPECIMEN',
+                documentNumber: '600001476935',
+                nationalityCountryCode: 'UTO',
+                birthDate: DateTime(2013, 01, 01),
+                sex: Sex.female,
+                expiryDate: DateTime(2023, 11, 20),
+                personalNumber: '',
+                personalNumber2: '13010198739',
+              ),
+            ));
 
     test(
         'document number check digit does not match throws $InvalidDocumentNumberException',

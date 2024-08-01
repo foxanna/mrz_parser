@@ -21,9 +21,38 @@ class _TD1MRZFormatParser {
 
     final documentTypeRaw = firstLine.substring(0, 2);
     final countryCodeRaw = firstLine.substring(2, 5);
-    final documentNumberRaw = firstLine.substring(5, 14);
-    final documentNumberCheckDigitRaw = firstLine[14];
-    final optionalDataRaw = firstLine.substring(15, 30);
+
+    final String documentNumberRaw;
+    final String documentNumberCheckDigitRaw;
+    final String optionalDataRaw;
+    final bool isLongDocumentNumber;
+
+    if (firstLine[14] == '<') {
+      // Implementation for ICAO 9303 Part 5, section 4.2.4
+      // TD1 check digit for long document numbers
+      // https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
+
+      final tmp_string =
+          firstLine.substring(15, 28).replaceAll(RegExp(r'<+$'), '');
+
+      documentNumberCheckDigitRaw = tmp_string[tmp_string.length - 1];
+
+      documentNumberRaw = firstLine.substring(5, 14) +
+          tmp_string.substring(0, tmp_string.length - 1);
+
+      //Unclear if optionalData1 is even allowed in this case.
+      //The ICAO doc is not so clear about it.
+      //Revise when a sample is availble...
+      optionalDataRaw = firstLine.substring(15 + tmp_string.length, 30);
+      isLongDocumentNumber = true;
+    } else {
+      // Normal TD1 case
+      documentNumberRaw = firstLine.substring(5, 14);
+      documentNumberCheckDigitRaw = firstLine[14];
+      optionalDataRaw = firstLine.substring(15, 30);
+      isLongDocumentNumber = false;
+    }
+
     final birthDateRaw = secondLine.substring(0, 6);
     final birthDateCheckDigitRaw = secondLine[6];
     final sexRaw = secondLine.substring(7, 8);
@@ -39,14 +68,19 @@ class _TD1MRZFormatParser {
     final countryCodeFixed =
         MRZFieldRecognitionDefectsFixer.fixCountryCode(countryCodeRaw);
     final documentNumberFixed = documentNumberRaw;
+
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
             documentNumberCheckDigitRaw);
+
     final optionalDataFixed = optionalDataRaw;
+
     final birthDateFixed =
         MRZFieldRecognitionDefectsFixer.fixDate(birthDateRaw);
+
     final birthDateCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(birthDateCheckDigitRaw);
+
     final sexFixed = MRZFieldRecognitionDefectsFixer.fixSex(sexRaw);
     final expiryDateFixed =
         MRZFieldRecognitionDefectsFixer.fixDate(expiryDateRaw);
@@ -61,7 +95,6 @@ class _TD1MRZFormatParser {
 
     final documentNumberIsValid = int.tryParse(documentNumberCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(documentNumberFixed);
-
     if (!documentNumberIsValid) {
       throw const InvalidDocumentNumberException();
     }
@@ -80,12 +113,23 @@ class _TD1MRZFormatParser {
       throw const InvalidExpiryDateException();
     }
 
+    final String documentNumberFixedForCheckString;
+    if (isLongDocumentNumber) {
+      // Long document number requires to re-introduce the < at position 15
+      documentNumberFixedForCheckString = documentNumberFixed.substring(0, 9) +
+          "<" +
+          documentNumberFixed.substring(9, documentNumberFixed.length);
+    } else {
+      documentNumberFixedForCheckString = documentNumberFixed;
+    }
+
     final finalCheckStringFixed =
-        '$documentNumberFixed$documentNumberCheckDigitFixed'
+        '$documentNumberFixedForCheckString$documentNumberCheckDigitFixed'
         '$optionalDataFixed'
         '$birthDateFixed$birthDateCheckDigitFixed'
         '$expiryDateFixed$expiryDateCheckDigitFixed'
         '$optionalData2Fixed';
+
     final finalCheckStringIsValid = int.tryParse(finalCheckDigitFixed) ==
         MRZCheckDigitCalculator.getCheckDigit(finalCheckStringFixed);
 
