@@ -1,5 +1,5 @@
 # mrz_parser (Dart/Flutter) 
-[![Coverage Status](https://coveralls.io/repos/github/olexale/mrz_parser/badge.svg?branch=master)](https://coveralls.io/github/olexale/mrz_parser?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/foxanna/mrz_parser/badge.svg?branch=master)](https://coveralls.io/github/foxanna/mrz_parser?branch=master)
 
 Parse MRZ (Machine Readable Zone) from identity documents. Heavily
 inspired by [QKMRZParser](https://github.com/Mattijah/QKMRZParser).
