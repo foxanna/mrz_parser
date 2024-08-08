@@ -1,19 +1,19 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class MRZFieldParser {
   MRZFieldParser._();
 
-  static String parseDocumentNumber(String input) => _trim(input);
+  static String parseDocumentNumber(final String input) => _trim(input);
 
-  static String parseDocumentType(String input) => _trim(input);
+  static String parseDocumentType(final String input) => _trim(input);
 
-  static String parseCountryCode(String input) => _trim(input);
+  static String parseCountryCode(final String input) => _trim(input);
 
-  static String parseNationality(String input) => _trim(input);
+  static String parseNationality(final String input) => _trim(input);
 
-  static String parseOptionalData(String input) => _trim(input);
+  static String parseOptionalData(final String input) => _trim(input);
 
-  static List<String> parseNames(String input) {
+  static List<String> parseNames(final String input) {
     final words = input.trimChar('<').split('<<');
     final result = [
       words.isNotEmpty ? _trim(words[0]) : '',
@@ -22,17 +22,17 @@ class MRZFieldParser {
     return result;
   }
 
-  static DateTime parseBirthDate(String input) {
+  static DateTime parseBirthDate(final String input) {
     final formattedInput = _formatDate(input);
     return _parseDate(formattedInput, DateTime.now().year - 2000);
   }
 
-  static DateTime parseExpiryDate(String input) {
+  static DateTime parseExpiryDate(final String input) {
     final formattedInput = _formatDate(input);
     return _parseDate(formattedInput, 70);
   }
 
-  static Sex parseSex(String input) {
+  static Sex parseSex(final String input) {
     switch (input) {
       case 'M':
         return Sex.male;
@@ -43,14 +43,14 @@ class MRZFieldParser {
     }
   }
 
-  static String _formatDate(String input) => _trim(input);
+  static String _formatDate(final String input) => _trim(input);
 
-  static DateTime _parseDate(String input, int milestoneYear) {
+  static DateTime _parseDate(final String input, final int milestoneYear) {
     final parsedYear = int.parse(input.substring(0, 2));
     final centennial = (parsedYear > milestoneYear) ? '19' : '20';
     return DateTime.parse(centennial + input);
   }
 
-  static String _trim(String input) =>
+  static String _trim(final String input) =>
       input.replaceAngleBracketsWithSpaces().trim();
 }
