@@ -3,23 +3,23 @@ part of 'mrz_parser.dart';
 class MRZFieldRecognitionDefectsFixer {
   MRZFieldRecognitionDefectsFixer._();
 
-  static String fixDocumentType(final String input) =>
+  static String fixDocumentType(String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixCheckDigit(final String input) =>
+  static String fixCheckDigit(String input) =>
       input.replaceSimilarLettersWithDigits();
 
-  static String fixDate(final String input) =>
+  static String fixDate(String input) =>
       input.replaceSimilarLettersWithDigits();
 
-  static String fixSex(final String input) => input.replaceAll('P', 'F');
+  static String fixSex(String input) => input.replaceAll('P', 'F');
 
-  static String fixCountryCode(final String input) =>
+  static String fixCountryCode(String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixNames(final String input) =>
+  static String fixNames(String input) =>
       input.replaceSimilarDigitsWithLetters();
 
-  static String fixNationality(final String input) =>
+  static String fixNationality(String input) =>
       input.replaceSimilarDigitsWithLetters();
 }

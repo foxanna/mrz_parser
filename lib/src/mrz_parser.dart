@@ -1,7 +1,7 @@
 library mrz_parser;
 
-import 'mrz_exceptions.dart';
-import 'mrz_result.dart';
+import 'package:mrz_parser/src/mrz_exceptions.dart';
+import 'package:mrz_parser/src/mrz_result.dart';
 
 part 'mrz_checkdigit_calculator.dart';
 part 'mrz_field_parser.dart';
@@ -19,7 +19,7 @@ class MRZParser {
   /// Like [parse] except that this function returns `null` where a
   /// similar call to [parse] would throw a [MRZException]
   /// in case of invalid input or unsuccessful parsing
-  static MRZResult? tryParse(final List<String?>? input) {
+  static MRZResult? tryParse(List<String?>? input) {
     try {
       return parse(input);
     } on Exception {
@@ -34,7 +34,7 @@ class MRZParser {
   ///
   /// If [input] format is invalid or parsing was unsuccessful,
   /// an instance of [MRZException] is thrown
-  static MRZResult parse(final List<String?>? input) {
+  static MRZResult parse(List<String?>? input) {
     final polishedInput = _polishInput(input);
     if (polishedInput == null) {
       throw const InvalidMRZInputException();
@@ -53,18 +53,14 @@ class MRZParser {
     throw const InvalidMRZInputException();
   }
 
-  static List<String>? _polishInput(final List<String?>? input) {
+  static List<String>? _polishInput(List<String?>? input) {
     if (input == null) {
       return null;
     }
 
-    final polishedInput = input
-        .where((final s) => s != null)
-        .map((final s) => s!.toUpperCase())
-        .toList();
+    final polishedInput =
+        input.where((s) => s != null).map((s) => s!.toUpperCase()).toList();
 
-    return polishedInput.any((final s) => !s.isValidMRZInput)
-        ? null
-        : polishedInput;
+    return polishedInput.any((s) => !s.isValidMRZInput) ? null : polishedInput;
   }
 }

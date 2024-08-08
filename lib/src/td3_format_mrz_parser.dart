@@ -6,11 +6,11 @@ class _TD3MRZFormatParser {
   static const _linesLength = 44;
   static const _linesCount = 2;
 
-  static bool isValidInput(final List<String> input) =>
+  static bool isValidInput(List<String> input) =>
       input.length == _linesCount &&
-      input.every((final s) => s.length == _linesLength);
+      input.every((s) => s.length == _linesLength);
 
-  static MRZResult parse(final List<String> input) {
+  static MRZResult parse(List<String> input) {
     if (!isValidInput(input)) {
       throw const InvalidMRZInputException();
     }
@@ -42,7 +42,8 @@ class _TD3MRZFormatParser {
     final documentNumberFixed = documentNumberRaw;
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+      documentNumberCheckDigitRaw,
+    );
     final nationalityFixed =
         MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
     final birthDateFixed =
@@ -57,7 +58,8 @@ class _TD3MRZFormatParser {
     final optionalDataFixed = optionalDataRaw;
     final optionalDataCheckDigitFixed = optionalDataCheckDigitRaw != null
         ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            optionalDataCheckDigitRaw)
+            optionalDataCheckDigitRaw,
+          )
         : null;
     final finalCheckDigitFixed = finalCheckDigitRaw != null
         ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw)
@@ -132,7 +134,6 @@ class _TD3MRZFormatParser {
       sex: sex,
       expiryDate: expiryDate,
       personalNumber: optionalData,
-      personalNumber2: null,
     );
   }
 }

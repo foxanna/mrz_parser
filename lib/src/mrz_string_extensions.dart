@@ -5,12 +5,13 @@ extension _MRZStringExtensions on String {
 
   bool get isValidMRZInput => _validInput.hasMatch(this);
 
-  String trimChar(final String char) {
+  String trimChar(String char) {
     if (isEmpty || char.isEmpty) {
       return this;
     }
 
-    var start = 0, end = length - 1;
+    var start = 0;
+    var end = length - 1;
     while (start < length && this[start] == char) {
       start++;
     }
