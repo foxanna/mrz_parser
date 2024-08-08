@@ -24,19 +24,30 @@ void main() {
   test('parses names', () {
     final equality = const DeepCollectionEquality().equals;
     expect(
-        equality(MRZFieldParser.parseNames('<<SURNAME<<GIVEN<NAMES<<<<<<'),
-            ['SURNAME', 'GIVEN NAMES']),
-        isTrue);
+      equality(
+        MRZFieldParser.parseNames('<<SURNAME<<GIVEN<NAMES<<<<<<'),
+        ['SURNAME', 'GIVEN NAMES'],
+      ),
+      isTrue,
+    );
     expect(
-        equality(MRZFieldParser.parseNames('<<SURNAME<<NAME<<<<<<'),
-            ['SURNAME', 'NAME']),
-        isTrue);
+      equality(
+        MRZFieldParser.parseNames('<<SURNAME<<NAME<<<<<<'),
+        ['SURNAME', 'NAME'],
+      ),
+      isTrue,
+    );
     expect(
-        equality(
-            MRZFieldParser.parseNames('<<SURNAME<<<<<<<<<'), ['SURNAME', '']),
-        isTrue);
+      equality(
+        MRZFieldParser.parseNames('<<SURNAME<<<<<<<<<'),
+        ['SURNAME', ''],
+      ),
+      isTrue,
+    );
     expect(
-        equality(MRZFieldParser.parseNames('<<<<<<<<<<<'), ['', '']), isTrue);
+      equality(MRZFieldParser.parseNames('<<<<<<<<<<<'), ['', '']),
+      isTrue,
+    );
   });
 
   test('parses nationality', () {

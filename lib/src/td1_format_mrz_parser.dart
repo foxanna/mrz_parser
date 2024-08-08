@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class _TD1MRZFormatParser {
   _TD1MRZFormatParser._();
@@ -32,18 +32,18 @@ class _TD1MRZFormatParser {
       // TD1 check digit for long document numbers
       // https://www.icao.int/publications/Documents/9303_p5_cons_en.pdf
 
-      final tmp_string =
+      final tmpString =
           firstLine.substring(15, 28).replaceAll(RegExp(r'<+$'), '');
 
-      documentNumberCheckDigitRaw = tmp_string[tmp_string.length - 1];
+      documentNumberCheckDigitRaw = tmpString[tmpString.length - 1];
 
       documentNumberRaw = firstLine.substring(5, 14) +
-          tmp_string.substring(0, tmp_string.length - 1);
+          tmpString.substring(0, tmpString.length - 1);
 
       //Unclear if optionalData1 is even allowed in this case.
       //The ICAO doc is not so clear about it.
       //Revise when a sample is availble...
-      optionalDataRaw = firstLine.substring(15 + tmp_string.length, 30);
+      optionalDataRaw = firstLine.substring(15 + tmpString.length, 30);
       isLongDocumentNumber = true;
     } else {
       // Normal TD1 case
@@ -71,7 +71,8 @@ class _TD1MRZFormatParser {
 
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+      documentNumberCheckDigitRaw,
+    );
 
     final optionalDataFixed = optionalDataRaw;
 
@@ -116,9 +117,8 @@ class _TD1MRZFormatParser {
     final String documentNumberFixedForCheckString;
     if (isLongDocumentNumber) {
       // Long document number requires to re-introduce the < at position 15
-      documentNumberFixedForCheckString = documentNumberFixed.substring(0, 9) +
-          "<" +
-          documentNumberFixed.substring(9, documentNumberFixed.length);
+      documentNumberFixedForCheckString =
+          '${documentNumberFixed.substring(0, 9)}<${documentNumberFixed.substring(9, documentNumberFixed.length)}';
     } else {
       documentNumberFixedForCheckString = documentNumberFixed;
     }

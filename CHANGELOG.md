@@ -1,3 +1,8 @@
+## [2.0.1]
+
+* Implements new ICAO9303 part 5 long document numbers for TD1 (by @nicoinn)
+* Support Dart 3, while maintaining backward compatibility with Dart 2 (by @tomasaquiles-ca)
+
 ## [2.0.0]
 
 * Support null-safety

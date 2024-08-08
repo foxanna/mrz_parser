@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class _TD2MRZFormatParser {
   _TD2MRZFormatParser._();
@@ -45,7 +45,8 @@ class _TD2MRZFormatParser {
     final documentNumberFixed = documentNumberRaw;
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+      documentNumberCheckDigitRaw,
+    );
     final nationalityFixed =
         MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
     final birthDateFixed =
@@ -120,7 +121,6 @@ class _TD2MRZFormatParser {
       sex: sex,
       expiryDate: expiryDate,
       personalNumber: optionalData,
-      personalNumber2: null,
     );
   }
 
@@ -159,7 +159,8 @@ class _TD2MRZFormatParser {
     final documentNumberFixed = documentNumberRaw;
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+      documentNumberCheckDigitRaw,
+    );
     final givenNamesFixed =
         MRZFieldRecognitionDefectsFixer.fixNames(givenNamesRaw);
     final birthDateFixed =
@@ -213,10 +214,11 @@ class _TD2MRZFormatParser {
     final birthDate = MRZFieldParser.parseBirthDate(birthDateFixed);
     final sex = MRZFieldParser.parseSex(sexFixed);
     final issueDate = MRZFieldParser.parseExpiryDate('${issueDateFixed}01');
-    final yearsValid = issueDate.isBefore(DateTime(2014, 01, 01))
+    final yearsValid = issueDate.isBefore(DateTime(2014))
         ? 10
         : birthDate.isBefore(
-                DateTime(issueDate.year - 18, issueDate.month, issueDate.day))
+            DateTime(issueDate.year - 18, issueDate.month, issueDate.day),
+          )
             ? 15
             : 10;
     final expiryDate =

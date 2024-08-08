@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class MRZFieldRecognitionDefectsFixer {
   MRZFieldRecognitionDefectsFixer._();

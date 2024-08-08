@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 extension _MRZStringExtensions on String {
   static final _validInput = RegExp(r'^[A-Z|0-9|<]+$');
@@ -10,7 +10,8 @@ extension _MRZStringExtensions on String {
       return this;
     }
 
-    var start = 0, end = length - 1;
+    var start = 0;
+    var end = length - 1;
     while (start < length && this[start] == char) {
       start++;
     }

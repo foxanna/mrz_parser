@@ -39,7 +39,9 @@ void main() {
 
   test('fixes names', () {
     expect(
-        MRZFieldRecognitionDefectsFixer.fixNames('<SURNAME<<'), '<SURNAME<<');
+      MRZFieldRecognitionDefectsFixer.fixNames('<SURNAME<<'),
+      '<SURNAME<<',
+    );
     expect(MRZFieldRecognitionDefectsFixer.fixNames('D<<'), 'D<<');
     expect(MRZFieldRecognitionDefectsFixer.fixNames('0128'), 'OIZB');
     expect(MRZFieldRecognitionDefectsFixer.fixNames('<'), '<');

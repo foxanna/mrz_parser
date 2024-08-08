@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class _TD3MRZFormatParser {
   _TD3MRZFormatParser._();
@@ -42,7 +42,8 @@ class _TD3MRZFormatParser {
     final documentNumberFixed = documentNumberRaw;
     final documentNumberCheckDigitFixed =
         MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            documentNumberCheckDigitRaw);
+      documentNumberCheckDigitRaw,
+    );
     final nationalityFixed =
         MRZFieldRecognitionDefectsFixer.fixNationality(nationalityRaw);
     final birthDateFixed =
@@ -57,7 +58,8 @@ class _TD3MRZFormatParser {
     final optionalDataFixed = optionalDataRaw;
     final optionalDataCheckDigitFixed = optionalDataCheckDigitRaw != null
         ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(
-            optionalDataCheckDigitRaw)
+            optionalDataCheckDigitRaw,
+          )
         : null;
     final finalCheckDigitFixed = finalCheckDigitRaw != null
         ? MRZFieldRecognitionDefectsFixer.fixCheckDigit(finalCheckDigitRaw)
@@ -132,7 +134,6 @@ class _TD3MRZFormatParser {
       sex: sex,
       expiryDate: expiryDate,
       personalNumber: optionalData,
-      personalNumber2: null,
     );
   }
 }

@@ -1,4 +1,4 @@
-part of mrz_parser;
+part of 'mrz_parser.dart';
 
 class MRZFieldParser {
   MRZFieldParser._();
@@ -16,8 +16,8 @@ class MRZFieldParser {
   static List<String> parseNames(String input) {
     final words = input.trimChar('<').split('<<');
     final result = [
-      words.isNotEmpty ? _trim(words[0]) : '',
-      words.length > 1 ? _trim(words[1]) : '',
+      if (words.isNotEmpty) _trim(words[0]) else '',
+      if (words.length > 1) _trim(words[1]) else '',
     ];
     return result;
   }
