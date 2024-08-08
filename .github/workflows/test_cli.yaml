@@ -1,0 +1,55 @@
+name: test_cli
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/test_cli.yaml"
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/test_cli.yaml"
+      - "lib/**"
+      - "test/**"
+      - "pubspec.yaml"
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v4
+
+      - name: 🎯 Setup Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: "stable"
+
+      - name: 📦 Install Dependencies
+        run: |
+          dart pub get
+     
+      - name: 💅 Check Formatting
+        run: dart format --set-exit-if-changed .
+
+      - name: 🕵️ Analyze
+        run: dart analyze --fatal-infos --fatal-warnings .
+
+      - name: 🧪 Run Tests
+        run: |
+          dart pub global activate coverage
+          dart test --coverage coverage
+          dart pub global run coverage:format_coverage --lcov --in coverage --out=coverage/lcov.info --packages=.dart_tool/package_config.json
+
+      - name: 📊 Code Coverage
+        run: |
+          gem install coveralls-lcov
+          coveralls-lcov --repo-token ${{ secrets.COVERALLS_TOKEN }} coverage/lcov.info
