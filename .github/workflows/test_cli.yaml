@@ -50,6 +50,4 @@ jobs:
           dart pub global run coverage:format_coverage --lcov --in coverage --out=coverage/lcov.info --packages=.dart_tool/package_config.json
 
       - name: 📊 Code Coverage
-        run: |
-          gem install coveralls-lcov
-          coveralls-lcov --repo-token ${{ secrets.COVERALLS_TOKEN }} coverage/lcov.info
+        uses: coverallsapp/github-action@v2
