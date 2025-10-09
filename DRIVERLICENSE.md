@@ -1,0 +1,3 @@
+| Identifier shall be "D" | Configuration, shall be "1" indicating BAP 1 or "<" indicating no chip/BAP | Issuing country (3A) | Version (1AN) | Doc Number (10N) | Random (13AN) | Check Digit (1N) |
+|-------------------------|----------------------------------------------------------------------------|----------------------|---------------|------------------|---------------|------------------|
+| D                       | 1                                                                          | NLD                  | x             | dddddddddd       | rrrrrrrrrrrrr | ?                |

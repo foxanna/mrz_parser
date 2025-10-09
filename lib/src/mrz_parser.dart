@@ -1,5 +1,6 @@
 library mrz_parser;
 
+import 'package:mrz_parser/src/mrz_driver_license_result.dart';
 import 'package:mrz_parser/src/mrz_exceptions.dart';
 import 'package:mrz_parser/src/mrz_result.dart';
 
@@ -10,6 +11,7 @@ part 'mrz_string_extensions.dart';
 part 'td1_format_mrz_parser.dart';
 part 'td2_format_mrz_parser.dart';
 part 'td3_format_mrz_parser.dart';
+part 'driver_license_format_mrz_parser.dart';
 
 class MRZParser {
   MRZParser._();
@@ -63,4 +65,11 @@ class MRZParser {
 
     return polishedInput.any((s) => !s.isValidMRZInput) ? null : polishedInput;
   }
+}
+
+/// Parse a driver license MRZ string and return [MRZDriverLicenseResult] instance.
+///
+/// The [line] must be a single 30-character line from a driver license MRZ.
+MRZDriverLicenseResult parseDriverLicense(String line) {
+  return _DriverLicenseMRZFormatParser.parse([line]);
 }
