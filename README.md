@@ -37,6 +37,24 @@ try {
 }
 ```
 
+### Parse Driver License
+```dart
+final driverLicense = [
+  'D1NLD11234567890ABCDEFGHIJKLM7'
+];
+
+final result = DriverLicenseParser.tryParse(driverLicense);
+
+// Alternatively use parse and catch MRZException descendants
+try {
+  final result = DriverLicenseParser.parse(driverLicense);
+  print(result.documentNumber); // 1234567890
+  print(result.countryCode); // NLD
+} on MRZException catch(e) {
+  print(e);
+}
+```
+
 ## Benchmarks
 
 Performance benchmarks for parsing different MRZ formats:
